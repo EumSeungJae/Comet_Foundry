@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="43" result="Passed" total="43" passed="43" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-10-14 08:52:45Z" end-time="2026-10-14 08:52:47Z" duration="1.9298789">
+  <test-suite type="TestSuite" id="1000" name="project_CF" fullname="project_CF" runstate="Runnable" testcasecount="91" result="Passed" start-time="2026-10-14 08:52:45Z" end-time="2026-10-14 08:52:47Z" duration="1.929879" total="43" passed="43" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1109" name="CometFoundry.EditModeTests.dll" fullname="D:/Programming/Comet_Foundry/project_CF/ValidationArtifacts/MissionCatalogProject/Library/ScriptAssemblies/CometFoundry.EditModeTests.dll" runstate="Runnable" testcasecount="91" result="Passed" start-time="2026-10-14 08:52:45Z" end-time="2026-10-14 08:52:47Z" duration="1.923082" total="43" passed="43" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="38640" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1110" name="CometFoundry" fullname="CometFoundry" runstate="Runnable" testcasecount="91" result="Passed" start-time="2026-10-14 08:52:45Z" end-time="2026-10-14 08:52:47Z" duration="1.922367" total="43" passed="43" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1111" name="Tests" fullname="CometFoundry.Tests" runstate="Runnable" testcasecount="91" result="Passed" start-time="2026-10-14 08:52:45Z" end-time="2026-10-14 08:52:47Z" duration="1.921888" total="43" passed="43" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestFixture" id="1021" name="FoundryGuidedTutorialTests" fullname="CometFoundry.Tests.FoundryGuidedTutorialTests" classname="CometFoundry.Tests.FoundryGuidedTutorialTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-10-14 08:52:45Z" end-time="2026-10-14 08:52:46Z" duration="0.929378" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1023" name="ConstructionStartsImmediatelyAndAdvancesOnlyAfterSuccessfulPlacement" fullname="CometFoundry.Tests.FoundryGuidedTutorialTests.ConstructionStartsImmediatelyAndAdvancesOnlyAfterSuccessfulPlacement" methodname="ConstructionStartsImmediatelyAndAdvancesOnlyAfterSuccessfulPlacement" classname="CometFoundry.Tests.FoundryGuidedTutorialTests" runstate="Runnable" seed="272248712" result="Passed" start-time="2026-10-14 08:52:45Z" end-time="2026-10-14 08:52:45Z" duration="0.051921" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1024" name="PurchasingOutputsDoesNotSatisfyProductionAndRestartClearsObservations" fullname="CometFoundry.Tests.FoundryGuidedTutorialTests.PurchasingOutputsDoesNotSatisfyProductionAndRestartClearsObservations" methodname="PurchasingOutputsDoesNotSatisfyProductionAndRestartClearsObservations" classname="CometFoundry.Tests.FoundryGuidedTutorialTests" runstate="Runnable" seed="657989612" result="Passed" start-time="2026-10-14 08:52:45Z" end-time="2026-10-14 08:52:45Z" duration="0.017457" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1025" name="StarterEconomySuppliesTheEntireGuidedProductionChainThroughDrones" fullname="CometFoundry.Tests.FoundryGuidedTutorialTests.StarterEconomySuppliesTheEntireGuidedProductionChainThroughDrones" methodname="StarterEconomySuppliesTheEntireGuidedProductionChainThroughDrones" classname="CometFoundry.Tests.FoundryGuidedTutorialTests" runstate="Runnable" seed="457314869" result="Passed" start-time="2026-10-14 08:52:45Z" end-time="2026-10-14 08:52:45Z" duration="0.025741" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1022" name="WalkthroughCoversFourteenChaptersAndCompletesRealObjectives" fullname="CometFoundry.Tests.FoundryGuidedTutorialTests.WalkthroughCoversFourteenChaptersAndCompletesRealObjectives" methodname="WalkthroughCoversFourteenChaptersAndCompletesRealObjectives" classname="CometFoundry.Tests.FoundryGuidedTutorialTests" runstate="Runnable" seed="123756540" result="Passed" start-time="2026-10-14 08:52:45Z" end-time="2026-10-14 08:52:46Z" duration="0.822515" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1050" name="FoundryMissionCatalogTests" fullname="CometFoundry.Tests.FoundryMissionCatalogTests" classname="CometFoundry.Tests.FoundryMissionCatalogTests" runstate="Runnable" testcasecount="7" result="Passed" start-time="2026-10-14 08:52:46Z" end-time="2026-10-14 08:52:46Z" duration="0.034318" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1054" name="EleventhContractGrantsOneHundredStackShipOnceAndPersistsIt" fullname="CometFoundry.Tests.FoundryMissionCatalogTests.EleventhContractGrantsOneHundredStackShipOnceAndPersistsIt" methodname="EleventhContractGrantsOneHundredStackShipOnceAndPersistsIt" classname="CometFoundry.Tests.FoundryMissionCatalogTests" runstate="Runnable" seed="2049387072" result="Passed" start-time="2026-10-14 08:52:46Z" end-time="2026-10-14 08:52:46Z" duration="0.012597" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1051" name="FifteenContractsHaveFivePerGradeAndRewardsMatchThePricingPolicy" fullname="CometFoundry.Tests.FoundryMissionCatalogTests.FifteenContractsHaveFivePerGradeAndRewardsMatchThePricingPolicy" methodname="FifteenContractsHaveFivePerGradeAndRewardsMatchThePricingPolicy" classname="CometFoundry.Tests.FoundryMissionCatalogTests" runstate="Runnable" seed="1728172389" result="Passed" start-time="2026-10-14 08:52:46Z" end-time="2026-10-14 08:52:46Z" duration="0.004840" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1055" name="FinalContractConsumesAllFiveMaterialsAcrossStorageAndPreservesUnrelatedStock" fullname="CometFoundry.Tests.FoundryMissionCatalogTests.FinalContractConsumesAllFiveMaterialsAcrossStorageAndPreservesUnrelatedStock" methodname="FinalContractConsumesAllFiveMaterialsAcrossStorageAndPreservesUnrelatedStock" classname="CometFoundry.Tests.FoundryMissionCatalogTests" runstate="Runnable" seed="1904561510" result="Passed" start-time="2026-10-14 08:52:46Z" end-time="2026-10-14 08:52:46Z" duration="0.001382" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1052" name="MissingOneMaterialPreservesAllInventoryAndRewards" fullname="CometFoundry.Tests.FoundryMissionCatalogTests.MissingOneMaterialPreservesAllInventoryAndRewards" methodname="MissingOneMaterialPreservesAllInventoryAndRewards" classname="CometFoundry.Tests.FoundryMissionCatalogTests" runstate="Runnable" seed="1602299134" result="Passed" start-time="2026-10-14 08:52:46Z" end-time="2026-10-14 08:52:46Z" duration="0.001590" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1056" name="OldActiveContractKeepsItsOriginalSingleMaterialAndRewardAcrossMigration" fullname="CometFoundry.Tests.FoundryMissionCatalogTests.OldActiveContractKeepsItsOriginalSingleMaterialAndRewardAcrossMigration" methodname="OldActiveContractKeepsItsOriginalSingleMaterialAndRewardAcrossMigration" classname="CometFoundry.Tests.FoundryMissionCatalogTests" runstate="Runnable" seed="1450987840" result="Passed" start-time="2026-10-14 08:52:46Z" end-time="2026-10-14 08:52:46Z" duration="0.002865" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1057" name="ShipRewardCapacityFailureDoesNotConsumeAnyMissionMaterial" fullname="CometFoundry.Tests.FoundryMissionCatalogTests.ShipRewardCapacityFailureDoesNotConsumeAnyMissionMaterial" methodname="ShipRewardCapacityFailureDoesNotConsumeAnyMissionMaterial" classname="CometFoundry.Tests.FoundryMissionCatalogTests" runstate="Runnable" seed="884423947" result="Passed" start-time="2026-10-14 08:52:46Z" end-time="2026-10-14 08:52:46Z" duration="0.001441" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1053" name="TenthContractGrantsAUsableUniqueCometOnceAndPreservesSurveyCandidates" fullname="CometFoundry.Tests.FoundryMissionCatalogTests.TenthContractGrantsAUsableUniqueCometOnceAndPreservesSurveyCandidates" methodname="TenthContractGrantsAUsableUniqueCometOnceAndPreservesSurveyCandidates" classname="CometFoundry.Tests.FoundryMissionCatalogTests" runstate="Runnable" seed="1422121869" result="Passed" start-time="2026-10-14 08:52:46Z" end-time="2026-10-14 08:52:46Z" duration="0.007196" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1026" name="FoundryProductionTests" fullname="CometFoundry.Tests.FoundryProductionTests" classname="CometFoundry.Tests.FoundryProductionTests" runstate="Runnable" testcasecount="22" result="Passed" start-time="2026-10-14 08:52:46Z" end-time="2026-10-14 08:52:47Z" duration="0.899322" total="22" passed="22" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1040" name="BackgroundColony_ContinuesProducingWhileAnotherIsSelected" fullname="CometFoundry.Tests.FoundryProductionTests.BackgroundColony_ContinuesProducingWhileAnotherIsSelected" methodname="BackgroundColony_ContinuesProducingWhileAnotherIsSelected" classname="CometFoundry.Tests.FoundryProductionTests" runstate="Runnable" seed="1721187174" result="Passed" start-time="2026-10-14 08:52:46Z" end-time="2026-10-14 08:52:46Z" duration="0.021531" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1042" name="Batch_ConsumesExactMaterialsAndCostOnlyAtCompletion" fullname="CometFoundry.Tests.FoundryProductionTests.Batch_ConsumesExactMaterialsAndCostOnlyAtCompletion" methodname="Batch_ConsumesExactMaterialsAndCostOnlyAtCompletion" classname="CometFoundry.Tests.FoundryProductionTests" runstate="Runnable" seed="1346462702" result="Passed" start-time="2026-10-14 08:52:46Z" end-time="2026-10-14 08:52:46Z" duration="0.001548" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1048" name="Buildings_RespectResourceNodesFootprintsAndBuildCosts" fullname="CometFoundry.Tests.FoundryProductionTests.Buildings_RespectResourceNodesFootprintsAndBuildCosts" methodname="Buildings_RespectResourceNodesFootprintsAndBuildCosts" classname="CometFoundry.Tests.FoundryProductionTests" runstate="Runnable" seed="401295228" result="Passed" start-time="2026-10-14 08:52:46Z" end-time="2026-10-14 08:52:46Z" duration="0.004553" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1027" name="ChartRaster_DrawsContinuousLineAndSplitsColorAtRegularPrice" fullname="CometFoundry.Tests.FoundryProductionTests.ChartRaster_DrawsContinuousLineAndSplitsColorAtRegularPrice" methodname="ChartRaster_DrawsContinuousLineAndSplitsColorAtRegularPrice" classname="CometFoundry.Tests.FoundryProductionTests" runstate="Runnable" seed="706945863" result="Passed" start-time="2026-10-14 08:52:46Z" end-time="2026-10-14 08:52:46Z" duration="0.009303" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1028" name="ChartRaster_HandlesBoundaryValuesAndSingleBalancePoint" fullname="CometFoundry.Tests.FoundryProductionTests.ChartRaster_HandlesBoundaryValuesAndSingleBalancePoint" methodname="ChartRaster_HandlesBoundaryValuesAndSingleBalancePoint" classname="CometFoundry.Tests.FoundryProductionTests" runstate="Runnable" seed="153474698" result="Passed" start-time="2026-10-14 08:52:46Z" end-time="2026-10-14 08:52:46Z" duration="0.004067" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1049" name="CompleteIndustrialChain_CanReachFiveEquipmentDeliveries" fullname="CometFoundry.Tests.FoundryProductionTests.CompleteIndustrialChain_CanReachFiveEquipmentDeliveries" methodname="CompleteIndustrialChain_CanReachFiveEquipmentDeliveries" classname="CometFoundry.Tests.FoundryProductionTests" runstate="Runnable" seed="1491143351" result="Passed" start-time="2026-10-14 08:52:46Z" end-time="2026-10-14 08:52:46Z" duration="0.504544" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1043" name="FullOutputInventory_DoesNotConsumeIceOrLoseWater" fullname="CometFoundry.Tests.FoundryProductionTests.FullOutputInventory_DoesNotConsumeIceOrLoseWater" methodname="FullOutputInventory_DoesNotConsumeIceOrLoseWater" classname="CometFoundry.Tests.FoundryProductionTests" runstate="Runnable" seed="468537452" result="Passed" start-time="2026-10-14 08:52:46Z" end-time="2026-10-14 08:52:46Z" duration="0.001193" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1039" name="FullPort_KeepsUndeliveredCargoUntilSpaceBecomesAvailable" fullname="CometFoundry.Tests.FoundryProductionTests.FullPort_KeepsUndeliveredCargoUntilSpaceBecomesAvailable" methodname="FullPort_KeepsUndeliveredCargoUntilSpaceBecomesAvailable" classname="CometFoundry.Tests.FoundryProductionTests" runstate="Runnable" seed="2030305664" result="Passed" start-time="2026-10-14 08:52:46Z" end-time="2026-10-14 08:52:46Z" duration="0.009170" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1045" name="InsufficientCredits_PausesWithoutMaterialLoss" fullname="CometFoundry.Tests.FoundryProductionTests.InsufficientCredits_PausesWithoutMaterialLoss" methodname="InsufficientCredits_PausesWithoutMaterialLoss" classname="CometFoundry.Tests.FoundryProductionTests" runstate="Runnable" seed="111269575" result="Passed" start-time="2026-10-14 08:52:46Z" end-time="2026-10-14 08:52:46Z" duration="0.001247" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1046" name="LargeTick_CompletesMultipleBatchesWithoutDiscardingTime" fullname="CometFoundry.Tests.FoundryProductionTests.LargeTick_CompletesMultipleBatchesWithoutDiscardingTime" methodname="LargeTick_CompletesMultipleBatchesWithoutDiscardingTime" classname="CometFoundry.Tests.FoundryProductionTests" runstate="Runnable" seed="1621816917" result="Passed" start-time="2026-10-14 08:52:46Z" end-time="2026-10-14 08:52:46Z" duration="0.001189" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1038" name="NoSyntheticEventPeak_AndSavePreservesMonthlyQuote" fullname="CometFoundry.Tests.FoundryProductionTests.NoSyntheticEventPeak_AndSavePreservesMonthlyQuote" methodname="NoSyntheticEventPeak_AndSavePreservesMonthlyQuote" classname="CometFoundry.Tests.FoundryProductionTests" runstate="Runnable" seed="141621294" result="Passed" start-time="2026-10-14 08:52:46Z" end-time="2026-10-14 08:52:46Z" duration="0.003133" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1034" name="PriceGraph_CoversRequestedMonthsWithReproduciblePositiveValues" fullname="CometFoundry.Tests.FoundryProductionTests.PriceGraph_CoversRequestedMonthsWithReproduciblePositiveValues" classname="CometFoundry.Tests.FoundryProductionTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-10-14 08:52:46Z" end-time="2026-10-14 08:52:46Z" duration="0.011924" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1030" name="PriceGraph_CoversRequestedMonthsWithReproduciblePositiveValues(6)" fullname="CometFoundry.Tests.FoundryProductionTests.PriceGraph_CoversRequestedMonthsWithReproduciblePositiveValues(6)" methodname="PriceGraph_CoversRequestedMonthsWithReproduciblePositiveValues" classname="CometFoundry.Tests.FoundryProductionTests" runstate="Runnable" seed="1125204830" result="Passed" start-time="2026-10-14 08:52:46Z" end-time="2026-10-14 08:52:46Z" duration="0.004483" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1031" name="PriceGraph_CoversRequestedMonthsWithReproduciblePositiveValues(12)" fullname="CometFoundry.Tests.FoundryProductionTests.PriceGraph_CoversRequestedMonthsWithReproduciblePositiveValues(12)" methodname="PriceGraph_CoversRequestedMonthsWithReproduciblePositiveValues" classname="CometFoundry.Tests.FoundryProductionTests" runstate="Runnable" seed="1221338801" result="Passed" start-time="2026-10-14 08:52:46Z" end-time="2026-10-14 08:52:46Z" duration="0.001680" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1032" name="PriceGraph_CoversRequestedMonthsWithReproduciblePositiveValues(18)" fullname="CometFoundry.Tests.FoundryProductionTests.PriceGraph_CoversRequestedMonthsWithReproduciblePositiveValues(18)" methodname="PriceGraph_CoversRequestedMonthsWithReproduciblePositiveValues" classname="CometFoundry.Tests.FoundryProductionTests" runstate="Runnable" seed="304358241" result="Passed" start-time="2026-10-14 08:52:46Z" end-time="2026-10-14 08:52:46Z" duration="0.001742" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1033" name="PriceGraph_CoversRequestedMonthsWithReproduciblePositiveValues(24)" fullname="CometFoundry.Tests.FoundryProductionTests.PriceGraph_CoversRequestedMonthsWithReproduciblePositiveValues(24)" methodname="PriceGraph_CoversRequestedMonthsWithReproduciblePositiveValues" classname="CometFoundry.Tests.FoundryProductionTests" runstate="Runnable" seed="1424668549" result="Passed" start-time="2026-10-14 08:52:46Z" end-time="2026-10-14 08:52:46Z" duration="0.002142" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-case id="1037" name="Prices_NormalLockHoldsWithoutSyntheticEvents" fullname="CometFoundry.Tests.FoundryProductionTests.Prices_NormalLockHoldsWithoutSyntheticEvents" methodname="Prices_NormalLockHoldsWithoutSyntheticEvents" classname="CometFoundry.Tests.FoundryProductionTests" runstate="Runnable" seed="270336413" result="Passed" start-time="2026-10-14 08:52:46Z" end-time="2026-10-14 08:52:47Z" duration="0.230950" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1044" name="ReselectingSameRecipe_PreservesProgress_ChangingRecipeResetsIt" fullname="CometFoundry.Tests.FoundryProductionTests.ReselectingSameRecipe_PreservesProgress_ChangingRecipeResetsIt" methodname="ReselectingSameRecipe_PreservesProgress_ChangingRecipeResetsIt" classname="CometFoundry.Tests.FoundryProductionTests" runstate="Runnable" seed="1337682870" result="Passed" start-time="2026-10-14 08:52:47Z" end-time="2026-10-14 08:52:47Z" duration="0.001235" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1036" name="Shipping_SaveInFlight_RestoresAndDeliversExactCargo" fullname="CometFoundry.Tests.FoundryProductionTests.Shipping_SaveInFlight_RestoresAndDeliversExactCargo" methodname="Shipping_SaveInFlight_RestoresAndDeliversExactCargo" classname="CometFoundry.Tests.FoundryProductionTests" runstate="Runnable" seed="731845583" result="Passed" start-time="2026-10-14 08:52:47Z" end-time="2026-10-14 08:52:47Z" duration="0.011520" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1047" name="StarterGame_HasFourFacilitiesAndMinesWithoutAutomaticSales" fullname="CometFoundry.Tests.FoundryProductionTests.StarterGame_HasFourFacilitiesAndMinesWithoutAutomaticSales" methodname="StarterGame_HasFourFacilitiesAndMinesWithoutAutomaticSales" classname="CometFoundry.Tests.FoundryProductionTests" runstate="Runnable" seed="322670561" result="Passed" start-time="2026-10-14 08:52:47Z" end-time="2026-10-14 08:52:47Z" duration="0.028754" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1035" name="Survey_ThreeCandidates_ColonizationChargesPortAndAllowsSelection" fullname="CometFoundry.Tests.FoundryProductionTests.Survey_ThreeCandidates_ColonizationChargesPortAndAllowsSelection" methodname="Survey_ThreeCandidates_ColonizationChargesPortAndAllowsSelection" classname="CometFoundry.Tests.FoundryProductionTests" runstate="Runnable" seed="145336262" result="Passed" start-time="2026-10-14 08:52:47Z" end-time="2026-10-14 08:52:47Z" duration="0.004632" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1029" name="Trade_AllGradesConserveStockAndMoneyAndRejectInvalidAmounts" fullname="CometFoundry.Tests.FoundryProductionTests.Trade_AllGradesConserveStockAndMoneyAndRejectInvalidAmounts" methodname="Trade_AllGradesConserveStockAndMoneyAndRejectInvalidAmounts" classname="CometFoundry.Tests.FoundryProductionTests" runstate="Runnable" seed="807667710" result="Passed" start-time="2026-10-14 08:52:47Z" end-time="2026-10-14 08:52:47Z" duration="0.002308" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1041" name="Tutorial_ActualConstructionProductionAndTradesCompleteAllSteps" fullname="CometFoundry.Tests.FoundryProductionTests.Tutorial_ActualConstructionProductionAndTradesCompleteAllSteps" methodname="Tutorial_ActualConstructionProductionAndTradesCompleteAllSteps" classname="CometFoundry.Tests.FoundryProductionTests" runstate="Runnable" seed="1846023190" result="Passed" start-time="2026-10-14 08:52:47Z" end-time="2026-10-14 08:52:47Z" duration="0.033378" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1058" name="FoundryRevisionTests" fullname="CometFoundry.Tests.FoundryRevisionTests" classname="CometFoundry.Tests.FoundryRevisionTests" runstate="Runnable" testcasecount="10" result="Passed" start-time="2026-10-14 08:52:47Z" end-time="2026-10-14 08:52:47Z" duration="0.051363" total="10" passed="10" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1063" name="ActiveMissionSurvivesSaveAndAbandonPreservesStock" fullname="CometFoundry.Tests.FoundryRevisionTests.ActiveMissionSurvivesSaveAndAbandonPreservesStock" methodname="ActiveMissionSurvivesSaveAndAbandonPreservesStock" classname="CometFoundry.Tests.FoundryRevisionTests" runstate="Runnable" seed="6492675" result="Passed" start-time="2026-10-14 08:52:47Z" end-time="2026-10-14 08:52:47Z" duration="0.004227" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1060" name="DemolitionPreservesStockClearsFootprintAndAllowsRebuild" fullname="CometFoundry.Tests.FoundryRevisionTests.DemolitionPreservesStockClearsFootprintAndAllowsRebuild" methodname="DemolitionPreservesStockClearsFootprintAndAllowsRebuild" classname="CometFoundry.Tests.FoundryRevisionTests" runstate="Runnable" seed="1418325233" result="Passed" start-time="2026-10-14 08:52:47Z" end-time="2026-10-14 08:52:47Z" duration="0.003128" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1061" name="DemolitionRejectsInsufficientStorageWithoutLosingStock" fullname="CometFoundry.Tests.FoundryRevisionTests.DemolitionRejectsInsufficientStorageWithoutLosingStock" methodname="DemolitionRejectsInsufficientStorageWithoutLosingStock" classname="CometFoundry.Tests.FoundryRevisionTests" runstate="Runnable" seed="600076105" result="Passed" start-time="2026-10-14 08:52:47Z" end-time="2026-10-14 08:52:47Z" duration="0.001578" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1062" name="MissionsRequireMarketAndConsumeOnlyDemandOnce" fullname="CometFoundry.Tests.FoundryRevisionTests.MissionsRequireMarketAndConsumeOnlyDemandOnce" methodname="MissionsRequireMarketAndConsumeOnlyDemandOnce" classname="CometFoundry.Tests.FoundryRevisionTests" runstate="Runnable" seed="1150136498" result="Passed" start-time="2026-10-14 08:52:47Z" end-time="2026-10-14 08:52:47Z" duration="0.002800" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1068" name="NewColonyExplainsDronePowerRequirement" fullname="CometFoundry.Tests.FoundryRevisionTests.NewColonyExplainsDronePowerRequirement" methodname="NewColonyExplainsDronePowerRequirement" classname="CometFoundry.Tests.FoundryRevisionTests" runstate="Runnable" seed="485472799" result="Passed" start-time="2026-10-14 08:52:47Z" end-time="2026-10-14 08:52:47Z" duration="0.007346" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1059" name="NoUncreatedEventCanExceedThirtyPercent" fullname="CometFoundry.Tests.FoundryRevisionTests.NoUncreatedEventCanExceedThirtyPercent" methodname="NoUncreatedEventCanExceedThirtyPercent" classname="CometFoundry.Tests.FoundryRevisionTests" runstate="Runnable" seed="1682573887" result="Passed" start-time="2026-10-14 08:52:47Z" end-time="2026-10-14 08:52:47Z" duration="0.003775" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1066" name="PracticeRequiresRealPlateProductionAndSurvivesSave" fullname="CometFoundry.Tests.FoundryRevisionTests.PracticeRequiresRealPlateProductionAndSurvivesSave" methodname="PracticeRequiresRealPlateProductionAndSurvivesSave" classname="CometFoundry.Tests.FoundryRevisionTests" runstate="Runnable" seed="229267940" result="Passed" start-time="2026-10-14 08:52:47Z" end-time="2026-10-14 08:52:47Z" duration="0.006203" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1064" name="ShippingDockCannotBeDemolishedUntilVoyageEnds" fullname="CometFoundry.Tests.FoundryRevisionTests.ShippingDockCannotBeDemolishedUntilVoyageEnds" methodname="ShippingDockCannotBeDemolishedUntilVoyageEnds" classname="CometFoundry.Tests.FoundryRevisionTests" runstate="Runnable" seed="186801766" result="Passed" start-time="2026-10-14 08:52:47Z" end-time="2026-10-14 08:52:47Z" duration="0.006631" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1065" name="SixteenMissionsStartAtSecondProcessingGradeAndOldRawMissionIsRetired" fullname="CometFoundry.Tests.FoundryRevisionTests.SixteenMissionsStartAtSecondProcessingGradeAndOldRawMissionIsRetired" methodname="SixteenMissionsStartAtSecondProcessingGradeAndOldRawMissionIsRetired" classname="CometFoundry.Tests.FoundryRevisionTests" runstate="Runnable" seed="336005498" result="Passed" start-time="2026-10-14 08:52:47Z" end-time="2026-10-14 08:52:47Z" duration="0.002709" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1067" name="SmallDroneStorageRestoresLogisticsAndPreservesFootprintOnLoad" fullname="CometFoundry.Tests.FoundryRevisionTests.SmallDroneStorageRestoresLogisticsAndPreservesFootprintOnLoad" methodname="SmallDroneStorageRestoresLogisticsAndPreservesFootprintOnLoad" classname="CometFoundry.Tests.FoundryRevisionTests" runstate="Runnable" seed="401379810" result="Passed" start-time="2026-10-14 08:52:47Z" end-time="2026-10-14 08:52:47Z" duration="0.008544" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[Saving results to: C:/Users/user/AppData/LocalLow/DefaultCompany/project_CF\TestResults.xml
+]]></output>
+            </test-case>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

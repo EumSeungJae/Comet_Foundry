@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using CometFoundry.Simulation;
 using UnityEngine;
 
@@ -12,24 +14,42 @@ namespace CometFoundry.Prototype
         
         private FacilityInstance demolitionTarget;
         private bool GameOverlayOpen => tutorialChoice || TutorialPausesTime || missionList || practicePopup || demolitionTarget != null;
+        private static string MissionDisplayTitle(FoundryMission mission) => mission.Number < 0 ? "기존 계약 · " + mission.Name :
+            mission.Number == 0 ? "튜토리얼 · " + mission.Name : $"{mission.Number:00} · {mission.ProcessingGrade}차 가공 · {mission.Name}";
+        private List<FoundryMission> MissionListContracts()
+        {
+            var contracts = session.Missions.ToList();
+            if (session.ActiveMission != null && !contracts.Any(m => m.Id == session.ActiveMission.Id)) contracts.Insert(0, session.ActiveMission);
+            return contracts;
+        }
+        private static float MissionRowHeight(FoundryMission mission) => 82 + mission.Requirements.Count * 22;
+        private float MissionRowOffset(int catalogIndex)
+        {
+            var contract = session.Missions[Mathf.Clamp(catalogIndex, 0, session.Missions.Count - 1)];
+            float offset = 0;
+            foreach (var row in MissionListContracts()) { if (row.Id == contract.Id) return offset; offset += MissionRowHeight(row); }
+            return offset;
+        }
         private void DrawMissionHud()
         {
             Label(new Rect(1150, 177, 246, 29), "거래소 미션", heading);
             var mission = session.ActiveMission;
             if (mission == null)
-            {
-                Label(new Rect(1150, 215, 246, 82), session.HasMarket ? "미션을 선택해 자원을 납품하고 보상을 받으세요." : "거래소 터미널을 건설하면 미션을 받을 수 있습니다.", text);
-            }
+                Label(new Rect(1150, 215, 246, 125), session.HasMarket ? "일반 미션 15개 + 튜토리얼 1개\n소재 2~5종을 모아 한 번에 납품합니다. 10번은 혜성, 11번은 수송선 보상이 포함됩니다." : "거래소 터미널을 건설하면 미션을 받을 수 있습니다.", text);
             else
             {
-                Label(new Rect(1150, 213, 246, 45), mission.Name, text);
-                Label(new Rect(1150, 263, 246, 22), $"{session.Content.FindResource(mission.ResourceId).DisplayName}  {Math.Min(session.MissionStock, mission.Amount):0.#}/{mission.Amount} 스택", small);
-                Label(new Rect(1150, 288, 246, 22), $"보상 {mission.Reward:N0} 솔라", Style(14, Green));
+                Label(new Rect(1150, 210, 246, 36), MissionDisplayTitle(mission), Style(13, Ink));
+                for (int i = 0; i < mission.Requirements.Count; i++)
+                {
+                    var requirement = mission.Requirements[i]; double have = session.MissionRequirementStock(requirement);
+                    Label(new Rect(1150, 252 + i * 18, 246, 18), $"{session.Content.FindResource(requirement.ResourceId).DisplayName}  {Math.Min(have, requirement.Amount):0.#}/{requirement.Amount} 스택", Style(12, have + 1e-8 >= requirement.Amount ? Green : Muted));
+                }
+                Label(new Rect(1150, 348, 246, 22), mission.RewardCaption, Style(11, Green));
             }
             bool enabled = GUI.enabled; GUI.enabled = enabled && session.HasMarket;
-            if (Btn(new Rect(1150, 316, 246, 29), mission == null ? "미션받기" : "미션 목록")) missionList = true;
-            GUI.enabled = enabled && session.HasMarket && mission != null && session.MissionStock >= mission.Amount;
-            if (mission != null && Btn(new Rect(1150, 351, 246, 30), "미션 납품", true)) session.DeliverMission(out notice);
+            if (Btn(new Rect(1150, 375, 246, 29), mission == null ? "미션받기" : "미션 목록")) missionList = true;
+            GUI.enabled = enabled && session.CanDeliverMission;
+            if (mission != null && Btn(new Rect(1150, 410, 246, 30), "모든 소재 납품", true)) session.DeliverMission(out notice);
             GUI.enabled = enabled;
         }
         private void OverlayFrame(Rect window, string caption)
@@ -56,18 +76,26 @@ namespace CometFoundry.Prototype
         private void DrawMissionList()
         {
             OverlayFrame(new Rect(260, 125, 920, 665), "거래소 / 납품 미션 목록");
-            Label(new Rect(286, 194, 860, 27), "한 번에 하나 수주 · 기한 없음 · 납품 시 자원 차감 · 보상은 1회 지급", small);
-            missionScroll = GUI.BeginScrollView(new Rect(286, 239, 866, 442), missionScroll, new Rect(0, 0, 844, session.Missions.Count * 88));
-            for (int i = 0; i < session.Missions.Count; i++)
+            Label(new Rect(286, 194, 860, 27), "일반 15개 · 가공 등급별 5개 · 소재 2~5종 일괄 납품 · 한 번에 하나 수주 · 보상 1회", small);
+            var contracts = MissionListContracts(); float contentHeight = contracts.Sum(MissionRowHeight);
+            missionScroll = GUI.BeginScrollView(new Rect(286, 239, 866, 442), missionScroll, new Rect(0, 0, 844, contentHeight));
+            float y = 0;
+            foreach (var mission in contracts)
             {
-                var m = session.Missions[i]; float y = i * 88;
-                Fill(new Rect(0, y, 844, 78), new Color32(32, 48, 56, 255));
-                Label(new Rect(17, y + 8, 660, 26), m.Name, heading);
-                Label(new Rect(17, y + 42, 660, 23), $"{session.Content.FindResource(m.ResourceId).DisplayName} {m.Amount} 스택 · 보상 {m.Reward:N0} 솔라", text);
-                GUI.enabled = session.HasMarket && session.ActiveMission == null && !session.MissionCompleted(m.Id) && (!session.MissionPracticeActive || m.Id == FoundrySession.PracticeMissionId);
-                string label = session.MissionCompleted(m.Id) ? "완료" : session.ActiveMission?.Id == m.Id ? "진행 중" : "수주";
-                if (Btn(new Rect(690, y + 16, 138, 46), label, true)) { session.AcceptMission(m.Id, out notice); missionList = false; }
-                GUI.enabled = true;
+                float height = MissionRowHeight(mission);
+                Fill(new Rect(0, y, 844, height - 8), new Color32(32, 48, 56, 255));
+                Label(new Rect(17, y + 8, 660, 26), MissionDisplayTitle(mission), Style(17, Ink, FontStyle.Bold));
+                for (int i = 0; i < mission.Requirements.Count; i++)
+                {
+                    var requirement = mission.Requirements[i]; double have = session.MissionRequirementStock(requirement);
+                    Label(new Rect(17, y + 40 + i * 22, 660, 22), $"{session.Content.FindResource(requirement.ResourceId).DisplayName} {requirement.Amount} 스택  /  확보 {have:0.#}", have + 1e-8 >= requirement.Amount ? Style(14, Green) : text);
+                }
+                Label(new Rect(17, y + 43 + mission.Requirements.Count * 22, 660, 22), "보상 " + mission.RewardCaption, Style(14, Orange));
+                GUI.enabled = session.HasMarket && session.ActiveMission == null && !session.MissionCompleted(mission.Id) && mission.Number >= 0
+                    && (!session.MissionPracticeActive || mission.Id == FoundrySession.PracticeMissionId);
+                string label = session.MissionCompleted(mission.Id) ? "완료" : session.ActiveMission?.Id == mission.Id ? "진행 중" : "수주";
+                if (Btn(new Rect(690, y + 16, 138, 46), label, true)) { session.AcceptMission(mission.Id, out notice); missionList = false; }
+                GUI.enabled = true; y += height;
             }
             GUI.EndScrollView();
             if (session.ActiveMission != null && Btn(new Rect(286, 716, 270, 43), "현재 미션 수주 취소")) { session.AbandonMission(); notice = "수주를 취소했습니다. 재고는 유지됩니다."; }

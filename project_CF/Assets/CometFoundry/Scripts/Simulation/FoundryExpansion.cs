@@ -83,7 +83,7 @@ namespace CometFoundry.Simulation
         private void ResetExpansion()
         {
             surveyCount = 0; surveyRemaining = 0; prospects.Clear(); voyages.Clear(); balances.Clear();
-            activeMissionId = null; completedMissionIds.Clear();
+            activeMissionId = null; legacyActiveMission = null; completedMissionIds.Clear();
             MissionPracticeStep = FoundryMissionPracticeStep.Inactive; PracticePlateMade = 0;
             TutorialStep = FoundryTutorialStep.BuildRefinery;
             TutorialIronMade = TutorialPlateMade = 0; ManualPurchases = ManualSales = 0;

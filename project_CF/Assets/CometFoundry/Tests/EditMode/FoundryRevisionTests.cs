@@ -81,13 +81,13 @@ namespace CometFoundry.Tests
                 s.SwitchColony(1); Assert.IsFalse(s.Demolish(s.Dock(s.ActiveColony), out _));
                 s.Advance(s.Voyages[0].Duration + 1); Assert.AreEqual(0, s.Voyages.Count);
             }
-        }        [Test] public void TenMissionsStartAtSecondProcessingGradeAndOldRawMissionIsRetired()
+        }        [Test] public void SixteenMissionsStartAtSecondProcessingGradeAndOldRawMissionIsRetired()
         {
             using (var s = new FoundrySession())
             {
-                Assert.AreEqual(10, s.Missions.Count);
-                Assert.AreEqual(10, s.Missions.Select(m => m.Id).Distinct().Count());
-                foreach (var m in s.Missions) Assert.GreaterOrEqual(s.Content.FindResource(m.ResourceId).ProcessingGrade, 2);
+                Assert.AreEqual(16, s.Missions.Count);
+                Assert.AreEqual(16, s.Missions.Select(m => m.Id).Distinct().Count());
+                foreach (var m in s.Missions) foreach (var requirement in m.Requirements) Assert.GreaterOrEqual(s.Content.FindResource(requirement.ResourceId).ProcessingGrade, 2);
                 BuildMarket(s); Assert.IsFalse(s.AcceptMission("first-iron", out _));
                 var saved = JsonUtility.FromJson<FoundryWorldSave>(s.ExportState()); saved.activeMission = "first-iron"; saved.completedMissions.Add("first-iron");
                 Assert.IsTrue(s.ImportState(JsonUtility.ToJson(saved))); Assert.IsNull(s.ActiveMission);
@@ -100,7 +100,7 @@ namespace CometFoundry.Tests
             {
                 Assert.IsTrue(s.StartMissionPractice(out _)); Assert.AreEqual(FoundryMissionPracticeStep.BuildMarket, s.MissionPracticeStep);
                 BuildMarket(s); s.Advance(.1); Assert.AreEqual(FoundryMissionPracticeStep.AcceptMission, s.MissionPracticeStep);
-                Assert.IsFalse(s.AcceptMission("wire-order", out _), "Practice requires the designated plate mission.");
+                Assert.IsFalse(s.AcceptMission(s.Missions.First(m => m.Number == 2).Id, out _), "Practice requires the designated plate mission.");
                 Assert.IsTrue(s.AcceptMission(FoundrySession.PracticeMissionId, out _));
                 Assert.IsTrue(s.Build(s.Content.FindBuilding("factory-metal"), new Vector2Int(8, 3), out _));
                 var factory = s.FacilityAt(new Vector2Int(8, 3)); factory.AssignRecipe(s.Content.FindRecipe("roll-plate"));

@@ -87,7 +87,7 @@ namespace CometFoundry.Prototype
             AddGuide(10, "미션 / 목록 열기", "‘미션받기’ 또는 ‘미션 목록’을 누르세요.\n요구 자원·스택 수·보상을 비교합니다. 동시에 하나만 수주할 수 있고 기한은 없습니다.", GuideAction.OpenMissions, target: "missions");
             AddGuide(10, "미션 / 수주", "노란 박스의 미션을 수주하세요. 처음에는 철판 4스택 납품을 안내합니다. 이미 수주한 미션은 그대로 이어갑니다.\n완료한 미션은 다시 수주할 수 없습니다. 일반 판매는 미션 납품으로 인정되지 않습니다.", GuideAction.AcceptMission, target: "mission-row");
             AddGuide(10, "미션 / 재고 확보", "철판 미션이라면 금속 가공소를 철판 압연으로, 정제소를 철괴 제련으로 설정하세요. 이전에 만든 재고도 사용할 수 있습니다.\n부족한 자원은 생산하거나 거래소에서 구매합니다. HUD는 전체 혜성의 확보 재고를 표시합니다.", GuideAction.MissionProduce, target: "mission-stock");
-            AddGuide(10, "미션 / 납품과 완료", "확보 재고가 충분합니다. 노란 박스의 ‘미션 납품’을 누르세요.\n요구 스택만 차감되고 보상이 한 번 지급됩니다. 납품 전에 재고를 판매하면 납품 가능 수량이 줄어듭니다.", GuideAction.DeliverMission, target: "deliver");
+            AddGuide(10, "미션 / 납품과 완료", "모든 요구 소재를 확보했습니다. 노란 박스의 ‘모든 소재 납품’을 누르세요.\n요구 스택만 한 번에 차감되고 보상이 지급됩니다. 소재 하나라도 부족하면 아무 재고도 차감하지 않습니다.", GuideAction.DeliverMission, target: "deliver");
             AddGuide(10, "미션 / 완료 확인", "미션 완료! 납품 자원이 차감되고 보상이 소지금에 반영됐습니다.\n미션 목록에서 완료 상태를 확인할 수 있습니다. 다음은 혜성관리입니다.", target: "credits");
             AddGuide(11, "혜성관리 열기", "노란 박스의 ‘혜성관리’를 누르세요.\n보유 혜성, 자금 변동, 새 혜성 탐사, 수송선 관리를 차례로 살펴봅니다.", GuideAction.OpenManagement, target: "management");
             AddGuide(11, "혜성관리 / 보유 혜성", "보유 혜성의 이름·좌표·남은 자원·시설 수·누적 판매 수익을 확인합니다.\n혜성 슬롯을 선택하면 개발 구역이 전환됩니다. 다른 혜성을 보고 있어도 기존 혜성은 계속 생산합니다.", target: "colonies", view: FoundryPage.Management);
@@ -164,7 +164,7 @@ namespace CometFoundry.Prototype
                 missionList = true;
                 guideMissionId = session.ActiveMission?.Id ?? session.Missions.FirstOrDefault(m => !session.MissionCompleted(m.Id))?.Id;
                 int index = session.Missions.ToList().FindIndex(m => m.Id == guideMissionId);
-                missionScroll.y = Math.Max(0, index * 88 - 88);
+                missionScroll.y = index < 0 ? 0 : Math.Max(0, MissionRowOffset(index) - 88);
             }
             if (step.Action == GuideAction.MissionProduce) speed = Math.Max(1, speed);
         }
@@ -194,7 +194,7 @@ namespace CometFoundry.Prototype
                 case GuideAction.AcceptMission:
                     if (session.ActiveMission != null) { guideMissionId = session.ActiveMission.Id; return true; }
                     return guideMissionId == null;
-                case GuideAction.MissionProduce: return guideMissionId == null || session.MissionCompleted(guideMissionId) || (session.ActiveMission?.Id == guideMissionId && session.MissionStock >= session.ActiveMission.Amount);
+                case GuideAction.MissionProduce: return guideMissionId == null || session.MissionCompleted(guideMissionId) || (session.ActiveMission?.Id == guideMissionId && session.CanDeliverMission);
                 case GuideAction.DeliverMission: return guideMissionId == null || session.MissionCompleted(guideMissionId);
                 case GuideAction.OpenManagement: return page == FoundryPage.Management;
                 case GuideAction.Survey: return session.IsExploring || session.Prospects.Count > 0;
@@ -332,13 +332,13 @@ namespace CometFoundry.Prototype
                 case "materials": return new Rect(24, 164, 292, 630);
                 case "prices": return new Rect(350, 228, 746, 439);
                 case "trade": return new Rect(1132, 164, 284, 630);
-                case "missions": return new Rect(1150, 316, 246, 29);
+                case "missions": return new Rect(1150, 375, 246, 29);
                 case "mission-row":
                     int index = session.Missions.ToList().FindIndex(m => m.Id == guideMissionId);
                     if (index < 0) return new Rect(286, 194, 860, 27);
-                    return new Rect(976, 255 + index * 88 - missionScroll.y, 138, 46);
-                case "mission-stock": return new Rect(1150, 213, 246, 91);
-                case "deliver": return new Rect(1150, 351, 246, 30);
+                    return new Rect(976, 255 + MissionRowOffset(index) - missionScroll.y, 138, 46);
+                case "mission-stock": return new Rect(1150, 210, 246, 160);
+                case "deliver": return new Rect(1150, 410, 246, 30);
                 case "management": return new Rect(1150, 752, 246, 33);
                 case "colonies": return new Rect(40, 178, 687, 324);
                 case "balance": return new Rect(42, 515, 681, 258);
@@ -392,10 +392,11 @@ namespace CometFoundry.Prototype
             string body = step.Body;
             if (step.Action == GuideAction.SelectSource) body += "\n선택할 출발 혜성: " + session.Colonies[guideOriginColony].Name;
             if (step.Action == GuideAction.SelectDestination && guideDestinationColony >= 0) body += "\n선택할 도착 혜성: " + session.Colonies[guideDestinationColony].Name;
-            if (step.Action == GuideAction.MissionProduce && session.ActiveMission != null && session.ActiveMission.ResourceId != "plate")
+            if (step.Action == GuideAction.MissionProduce && session.ActiveMission != null && session.ActiveMission.Id != FoundrySession.PracticeMissionId)
             {
                 var mission = session.ActiveMission;
-                body = $"수주한 미션: {mission.Name}\n{session.Content.FindResource(mission.ResourceId).DisplayName} {mission.Amount}스택을 생산하거나 거래소에서 구매하세요.\n\nHUD 진행 수치는 모든 혜성의 시설 재고를 합산합니다. 요구 재고를 확보하면 납품 안내로 넘어갑니다.";
+                body = "수주한 미션: " + mission.Name + "\n" + string.Join("\n", mission.Requirements.Select(r => $"{session.Content.FindResource(r.ResourceId).DisplayName} {r.Amount}스택")) +
+                    "\n모든 소재를 생산하거나 구매하세요. 전체 혜성의 시설 재고를 모으면 일괄 납품할 수 있습니다.";
             }
             Label(new Rect(window.x + 18, window.y + 88, contentWidth, window.height - 165), body, Style(15, Ink));
             string status = step.Action == GuideAction.Read ? "설명 중 시간 정지 · 읽은 뒤 다음 설명으로 진행합니다." : "목표를 직접 수행하세요. 완료 시 자동으로 다음 단계로 넘어갑니다.";

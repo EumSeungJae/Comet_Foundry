@@ -278,8 +278,8 @@ namespace CometFoundry.Prototype
         {
             Fill(new Rect(1132, 164, 284, 630), Panel);
             DrawMissionHud();
-            Label(new Rect(1150, 389, 246, 26), "현재 혜성 재고 / 스택", heading);
-            inventoryScroll = GUI.BeginScrollView(new Rect(1144, 426, 260, 265), inventoryScroll, new Rect(0, 0, 238, session.Content.Resources.Count * 28));
+            Label(new Rect(1150, 459, 246, 26), "현재 혜성 재고 / 스택", heading);
+            inventoryScroll = GUI.BeginScrollView(new Rect(1144, 489, 260, 210), inventoryScroll, new Rect(0, 0, 238, session.Content.Resources.Count * 28));
             float y = 0;
             foreach (var resource in session.Content.Resources)
             {

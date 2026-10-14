@@ -24,13 +24,14 @@ namespace CometFoundry.Simulation
         {
             var save = new FoundryWorldSave
             {
-                version = 3, calendarSecondsPerDay = RealSecondsPerDay, credits = Company.Credits, seconds = Seconds, sales = Sales, delivered = EquipmentDelivered,
+                version = 4, calendarSecondsPerDay = RealSecondsPerDay, credits = Company.Credits, seconds = Seconds, sales = Sales, delivered = EquipmentDelivered,
                 autoSell = AutoSell, active = activeColony, nextId = nextId, surveyCount = surveyCount,
                 surveyRemaining = surveyRemaining, shipCount = Company.Ships.Count, tutorial = (int)TutorialStep,
                 ironMade = TutorialIronMade, plateMade = TutorialPlateMade, manualSales = ManualSales, manualPurchases = ManualPurchases
             };
             save.missionPractice = (int)MissionPracticeStep; save.practicePlateMade = PracticePlateMade;
             save.activeMission = activeMissionId; save.completedMissions = completedMissionIds.ToList();
+            save.legacyMissionContract = legacyActiveMission != null;
             foreach (var colony in colonies) save.colonies.Add(WriteColony(colony));
             foreach (var prospect in prospects)
                 save.prospects.Add(new SavedProspect { colony = WriteColony(new FoundryColony(prospect.State, prospect.State.DisplayName)), cost = prospect.Cost, x = prospect.PortAnchor.x, y = prospect.PortAnchor.y });
@@ -112,7 +113,7 @@ namespace CometFoundry.Simulation
             try
             {
                 var saved = JsonUtility.FromJson<FoundryWorldSave>(json);
-                if (saved == null || (saved.version != 2 && saved.version != 3) || !Finite(saved.credits) || saved.credits < 0 || !Finite(saved.seconds) || saved.seconds < 0
+                if (saved == null || (saved.version != 2 && saved.version != 3 && saved.version != 4) || !Finite(saved.credits) || saved.credits < 0 || !Finite(saved.seconds) || saved.seconds < 0
                     || !Finite(saved.sales) || saved.sales < 0 || saved.colonies == null || saved.colonies.Count == 0 || saved.active < 0 || saved.active >= saved.colonies.Count
                     || saved.shipCount < 1 || saved.shipCount > 128 || saved.voyages == null || saved.prospects == null || saved.balances == null
                     || saved.tutorial < 0 || saved.tutorial > 9 || !Finite(saved.surveyRemaining) || saved.surveyRemaining < 0 || saved.surveyRemaining > SurveySeconds
@@ -122,8 +123,11 @@ namespace CometFoundry.Simulation
                 double restoredSeconds = saved.seconds / savedDayDuration * RealSecondsPerDay;
                 if (!Finite(restoredSeconds)) return false;
                 var missionIds = saved.completedMissions ?? new List<string>();
-                if (missionIds.Distinct().Count() != missionIds.Count || missionIds.Any(id => id != "first-iron" && !missions.Any(m => m.Id == id))
-                    || (!string.IsNullOrEmpty(saved.activeMission) && saved.activeMission != "first-iron" && (!missions.Any(m => m.Id == saved.activeMission) || missionIds.Contains(saved.activeMission)))) return false;
+                var loadedLegacyMission = retiredMissions.FirstOrDefault(m => m.Id == saved.activeMission);
+                bool keepLegacyContract = loadedLegacyMission != null && (saved.version < 4 || saved.legacyMissionContract);
+                if (saved.legacyMissionContract && !keepLegacyContract) return false;
+                if (missionIds.Distinct().Count() != missionIds.Count || missionIds.Any(missionId => missionId != "first-iron" && !missions.Any(m => m.Id == missionId) && !retiredMissions.Any(m => m.Id == missionId))
+                    || (!string.IsNullOrEmpty(saved.activeMission) && saved.activeMission != "first-iron" && ((!missions.Any(m => m.Id == saved.activeMission) && !keepLegacyContract) || missionIds.Contains(saved.activeMission)))) return false;
                 if (saved.missionPractice < 0 || saved.missionPractice > (int)FoundryMissionPracticeStep.Complete
                     || !Finite(saved.practicePlateMade) || saved.practicePlateMade < 0) return false;
                 int id = 0;
@@ -162,6 +166,7 @@ namespace CometFoundry.Simulation
                 colonies.Clear(); colonies.AddRange(loaded); Company = company; activeColony = saved.active;
                 voyages.Clear(); voyages.AddRange(loadedVoyages); prospects.Clear(); prospects.AddRange(loadedProspects);
                 activeMissionId = saved.activeMission == "first-iron" ? null : saved.activeMission;
+                legacyActiveMission = keepLegacyContract ? loadedLegacyMission : null;
                 MissionPracticeStep = (FoundryMissionPracticeStep)saved.missionPractice; PracticePlateMade = saved.practicePlateMade; completedMissionIds.Clear(); foreach (string missionId in missionIds) completedMissionIds.Add(missionId);
                 balances.Clear(); balances.AddRange(saved.balances); Seconds = restoredSeconds; Sales = saved.sales;
                 EquipmentDelivered = Math.Max(0, saved.delivered); AutoSell = saved.autoSell; nextId = Math.Max(saved.nextId, id);
@@ -181,7 +186,7 @@ namespace CometFoundry.Simulation
         public double practicePlateMade;
         public string activeMission;
         public List<string> completedMissions = new List<string>();
-        public bool autoSell;
+        public bool autoSell, legacyMissionContract;
         public List<SavedColony> colonies = new List<SavedColony>();
         public List<SavedProspect> prospects = new List<SavedProspect>();
         public List<SavedVoyage> voyages = new List<SavedVoyage>();

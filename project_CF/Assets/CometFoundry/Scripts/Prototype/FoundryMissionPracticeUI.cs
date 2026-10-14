@@ -31,7 +31,7 @@ namespace CometFoundry.Prototype
                 case FoundryMissionPracticeStep.ProducePlates:
                     instruction = $"5. 철판 4스택을 직접 생산하세요.\n실습 중 생산 {session.PracticePlateMade:0.#}/4 스택 · 확보 재고 {session.MissionStock:0.#}/4 스택\n\n정제소의 철괴 제련으로 재료를 만들거나 거래소에서 철괴를 구매합니다. 드론이 철괴를 금속 가공소로 운반합니다. 전력·드론 지원시설·빈 통로·보관 공간을 확인하세요. 철판을 구매하는 것만으로는 실습을 통과할 수 없습니다."; break;
                 case FoundryMissionPracticeStep.Deliver:
-                    instruction = "6. 생산한 철판을 미션에 납품하세요.\n우측 미션 HUD에서 미션 납품을 누릅니다. 철판 4스택만 차감되고 보상 1,500 솔라를 받습니다. 일반 판매는 미션 납품으로 인정되지 않습니다."; break;
+                    instruction = "6. 생산한 철판을 미션에 납품하세요.\n우측 미션 HUD에서 모든 소재 납품을 누릅니다. 철판 4스택만 차감되고 보상 1,500 솔라를 받습니다. 일반 판매는 미션 납품으로 인정되지 않습니다."; break;
                 default:
                     instruction = "철판 미션 실습 완료!\n2차 가공품 생산과 거래소 미션 납품을 완료했습니다. 미션 목록에서 구리선·기어·프레임·회로기판과 더 높은 등급의 미션에 도전하세요. 저장 버튼으로 진행을 기록하세요."; break;
             }

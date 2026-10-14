@@ -89,7 +89,7 @@ public static class FoundryValidation
         {
             api.Execute(new ExecutionSettings(new Filter { testMode = TestMode.EditMode, groupNames = new[] {
                 "CometFoundry.Tests.FoundryGuidedTutorialTests", "CometFoundry.Tests.FoundryRevisionTests",
-                "CometFoundry.Tests.FoundryProductionTests", "CometFoundry.Tests.FoundryManagementTests" } }));
+                "CometFoundry.Tests.FoundryProductionTests", "CometFoundry.Tests.FoundryManagementTests", "CometFoundry.Tests.FoundryMissionCatalogTests" } }));
         }
         catch { tutorialTestsRunning = false; api.UnregisterCallbacks(callbacks); UnityEngine.Object.DestroyImmediate(api); throw; }
     }

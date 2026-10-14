@@ -75,7 +75,9 @@ namespace CometFoundry.Tests
                         case "OpenMissions": Set(controller, "missionList", true); break;
                         case "AcceptMission": Assert.IsTrue(session.AcceptMission((string)Get(controller, "guideMissionId"), out _)); break;
                         case "MissionProduce":
-                            session.Comet.Facilities.First(f => f.Definition.IsWarehouse).Inventory.AddStacks(session.Content.FindResource(session.ActiveMission.ResourceId), session.ActiveMission.Amount); break;
+                            foreach (var demand in session.ActiveMission.Requirements)
+                                session.Comet.Facilities.First(f => f.Definition.IsWarehouse).Inventory.AddStacks(session.Content.FindResource(demand.ResourceId), demand.Amount);
+                            break;
                         case "DeliverMission": Assert.IsTrue(session.DeliverMission(out _)); break;
                         case "OpenManagement": Set(controller, "page", FoundryPage.Management); break;
                         case "Survey": Assert.IsTrue(session.Explore(out _)); break;
