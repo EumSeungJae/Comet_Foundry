@@ -1,0 +1,1 @@
+PASS: bundled Maplestory Light/Bold; title cover texture; four starter facilities; 16 resources / 16 recipes; mining; production; storage blocking; cost conservation; multiple batches; recipe changes; placement; save/load; 12 building sprites.

@@ -1,0 +1,1 @@
+PASS: 5-second day; 150-second month; legacy calendar save migration; calendar/month/year rollovers; all-material 30-day fixed prices/events; price limits; month-boundary trade quote refresh; immutable balance snapshots; monthly graph ranges; save/load.
