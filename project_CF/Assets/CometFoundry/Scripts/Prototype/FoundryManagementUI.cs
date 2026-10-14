@@ -17,7 +17,7 @@ namespace CometFoundry.Prototype
         private Vector2 materialScroll, colonyScroll;
         private Texture2D priceChartTexture, balanceChartTexture;
         private string priceChartKey, balanceChartKey;
-        private void ResetPanelSelection() { demolishMode = false; demolitionTarget = null; missionList = false; page = FoundryPage.Board; selected = null; materialIndex = cargoIndex = shipIndex = shipFrom = 0; shipTo = 1; prospectIndex = -1; priceChartKey = balanceChartKey = null; }
+        private void ResetPanelSelection() { tutorialGuide = false; practicePopup = false; demolishMode = false; demolitionTarget = null; missionList = false; page = FoundryPage.Board; selected = null; materialIndex = cargoIndex = shipIndex = shipFrom = 0; shipTo = 1; prospectIndex = -1; priceChartKey = balanceChartKey = null; }
         private void OpenExchange() { if (!session.HasMarket) return; page = FoundryPage.Exchange; selected = null; build = null; }
         private void PageHeader(string caption)
         {
@@ -62,18 +62,18 @@ namespace CometFoundry.Prototype
             int max = session.MaxTradeQuantity(resource, buying);
             tradeQuantity = Mathf.Clamp(tradeQuantity, 1, Math.Max(1, max));
             Label(new Rect(1150, 402, 244, 29), $"거래 수량  {tradeQuantity:N0} 스택", heading);
-            GUI.enabled = (max > 0) && !GameOverlayOpen;
+            GUI.enabled = (max > 0) && !GameInputBlocked;
             tradeQuantity = Mathf.RoundToInt(GUI.HorizontalSlider(new Rect(1150, 450, 246, 25), tradeQuantity, 1, Math.Max(1, max)));
             if (Btn(new Rect(1150, 489, 75, 32), "− 1")) tradeQuantity = Math.Max(1, tradeQuantity - 1);
             if (Btn(new Rect(1232, 489, 75, 32), "+ 1")) tradeQuantity = Math.Min(max, tradeQuantity + 1);
             if (Btn(new Rect(1314, 489, 82, 32), "최대")) tradeQuantity = max;
-            GUI.enabled = (true) && !GameOverlayOpen;
+            GUI.enabled = (true) && !GameInputBlocked;
             Label(new Rect(1150, 548, 244, 55), $"합계 {(buying ? session.BuyUnitPrice(resource) : session.SellUnitPrice(resource)) * tradeQuantity:N2} 솔라\n거래 가능 최대 {max:N0} 스택", text);
             string error = session.TradeError(resource, buying, tradeQuantity);
             Label(new Rect(1150, 620, 244, 67), error ?? (buying ? "구매 소재는 창고·항구·거래소에 입고됩니다." : "현재 혜성의 재고에서 판매합니다."), small);
-            GUI.enabled = (error == null) && !GameOverlayOpen;
+            GUI.enabled = (error == null) && !GameInputBlocked;
             if (Btn(new Rect(1150, 710, 246, 54), "거래 확인", true)) session.Trade(resource, buying, tradeQuantity, out notice);
-            GUI.enabled = (true) && !GameOverlayOpen;
+            GUI.enabled = (true) && !GameInputBlocked;
         }
         private void DrawManagement()
         {
@@ -101,9 +101,9 @@ namespace CometFoundry.Prototype
         private void DrawExploration()
         {
             Label(new Rect(780, 230, 610, 54), $"탐사 비용 {FoundrySession.SurveyCost:N0} 솔라 · {FoundrySession.SurveySeconds:0}초\n발견한 3개 후보 중 하나를 선택해 항구와 함께 개척합니다.", text);
-            GUI.enabled = (!session.IsExploring && session.Company.Credits >= FoundrySession.SurveyCost) && !GameOverlayOpen;
+            GUI.enabled = (!session.IsExploring && session.Company.Credits >= FoundrySession.SurveyCost) && !GameInputBlocked;
             if (Btn(new Rect(780, 297, 610, 40), session.IsExploring ? $"탐사 중 · {session.SurveyRemainingSeconds:0.0}초" : "새 탐사 시작", true)) { session.Explore(out notice); prospectIndex = -1; }
-            GUI.enabled = (true) && !GameOverlayOpen;
+            GUI.enabled = (true) && !GameInputBlocked;
             for (int i = 0; i < session.Prospects.Count; i++)
             {
                 var p = session.Prospects[i]; float y = 352 + i * 107;
@@ -113,9 +113,9 @@ namespace CometFoundry.Prototype
                 Label(new Rect(794, y + 69, 580, 23), $"개척 비용 {p.Cost:N0} 솔라 (항구 포함)", text);
             }
             if (session.Prospects.Count == 0) Label(new Rect(792, 397, 590, 90), "탐사를 시작하면 발견한 혜성이 표시됩니다.\n개척 후 좌측 혜성 슬롯을 선택하여 건설할 수 있습니다.", small);
-            GUI.enabled = (prospectIndex >= 0 && prospectIndex < session.Prospects.Count && session.Company.Credits >= session.Prospects[prospectIndex].Cost) && !GameOverlayOpen;
+            GUI.enabled = (prospectIndex >= 0 && prospectIndex < session.Prospects.Count && session.Company.Credits >= session.Prospects[prospectIndex].Cost) && !GameInputBlocked;
             if (Btn(new Rect(780, 698, 610, 52), "선택한 혜성 개척하기", true)) { session.Colonize(prospectIndex, out notice); prospectIndex = -1; }
-            GUI.enabled = (true) && !GameOverlayOpen;
+            GUI.enabled = (true) && !GameInputBlocked;
         }
         private int CyclePicker(string label, string value, int index, int count, float y)
         {
@@ -141,11 +141,11 @@ namespace CometFoundry.Prototype
             Label(new Rect(780, 522, 610, 35), $"운송 비용 {session.ShippingCost(from, to, cargoQuantity):N0} 솔라 · 소요 {session.ShippingSeconds(from, to):0.0}초", text);
             string error = session.ShippingError(shipIndex, shipFrom, shipTo, r, cargoQuantity);
             Label(new Rect(780, 568, 610, 60), error ?? "운송 중에도 다른 혜성을 개발할 수 있습니다. 도착 항구가 차면 화물을 선내에 보관하며 하역을 기다립니다.", small);
-            GUI.enabled = (error == null) && !GameOverlayOpen;
+            GUI.enabled = (error == null) && !GameInputBlocked;
             if (Btn(new Rect(780, 644, 610, 44), "운송 시작", true)) session.Dispatch(shipIndex, shipFrom, shipTo, r, cargoQuantity, out notice);
-            GUI.enabled = (session.Company.Credits >= FoundrySession.ShipPurchaseCost) && !GameOverlayOpen;
+            GUI.enabled = (session.Company.Credits >= FoundrySession.ShipPurchaseCost) && !GameInputBlocked;
             if (Btn(new Rect(780, 708, 610, 42), $"수송선 추가 구매 · {FoundrySession.ShipPurchaseCost:N0} 솔라")) session.PurchaseShip(out notice);
-            GUI.enabled = (true) && !GameOverlayOpen;
+            GUI.enabled = (true) && !GameInputBlocked;
         }
         private static string MonthlyChange(List<FoundryHistoryPoint> points)
         {

@@ -21,7 +21,7 @@ namespace CometFoundry.Prototype
         private float speed = 1;
         private Vector2 buildScroll;
         private Vector2 inventoryScroll, popupScroll;
-        private string notice = "발전소·기본 창고·채굴기 2개가 준비됐습니다. 오른쪽 튜토리얼을 따라 정제소부터 건설하세요.";
+        private string notice = "발전소·기본 창고·채굴기 2개가 준비됐습니다. 상단 튜토리얼에서 채굴기 건설부터 차근차근 시작하세요.";
         private bool confirmNew;
         private static readonly Color Ink = new Color32(229, 236, 230, 255);
         private static readonly Color Muted = new Color32(137, 159, 162, 255);
@@ -48,7 +48,10 @@ namespace CometFoundry.Prototype
             titleArtwork = Resources.Load<Texture2D>("Title/CometFoundryCover");
             string[] arguments = Environment.GetCommandLineArgs();
             for (int i = 0; i + 1 < arguments.Length; i++)
+            {
                 if (arguments[i] == "-foundryCapture") StartCoroutine(CaptureReview(arguments[i + 1]));
+                if (arguments[i] == "-foundryTutorialCapture") StartCoroutine(CaptureGuidedReview(arguments[i + 1]));
+            }
         }
         private IEnumerator CaptureReview(string directory)
         {
@@ -62,7 +65,7 @@ namespace CometFoundry.Prototype
             CaptureFrame(Path.Combine(directory, "gameplay.png"));
             tutorialChoice = true; yield return new WaitForEndOfFrame(); CaptureFrame(Path.Combine(directory, "tutorial-choice.png"));
             StartTutorialGuide(); yield return new WaitForEndOfFrame(); CaptureFrame(Path.Combine(directory, "tutorial-guide.png"));
-            guidePage = 17; yield return new WaitForEndOfFrame(); CaptureFrame(Path.Combine(directory, "tutorial-last-page.png"));
+            guidePage = guidedSteps.Count - 1; EnterGuideStep(); yield return new WaitForEndOfFrame(); CaptureFrame(Path.Combine(directory, "tutorial-last-page.png"));
             tutorialGuide = false; session.Build(session.Content.FindBuilding("market-terminal"), new Vector2Int(12, 7), out _);
             missionList = true; yield return new WaitForEndOfFrame(); CaptureFrame(Path.Combine(directory, "mission-list.png"));
             missionList = false; session.AcceptMission(session.Missions[0].Id, out _);
@@ -95,7 +98,7 @@ namespace CometFoundry.Prototype
             finally { RenderTexture.active = previous; RenderTexture.ReleaseTemporary(target); Destroy(capture); }
 
         }
-        private void Update() { if (!showingTitle && !GameOverlayOpen) session.Advance(Math.Min(Time.unscaledDeltaTime, 0.25f) * speed); if (!showingTitle) CheckPracticePopup(); }
+        private void Update() { if (!showingTitle && !GameOverlayOpen && !TutorialPausesTime) session.Advance(Math.Min(Time.unscaledDeltaTime, 0.25f) * speed); if (!showingTitle) { CheckGuidedTutorial(); if (!tutorialGuide) CheckPracticePopup(); } }
         private void OnDestroy()
         {
             if (priceChartTexture != null) Destroy(priceChartTexture);
@@ -128,18 +131,19 @@ namespace CometFoundry.Prototype
                 GUI.matrix = oldMatrix; GUI.color = oldColor; GUI.enabled = oldEnabled;
                 return;
             }
-            if (!GameOverlayOpen) HandleKeys();
-            GUI.enabled = (selected == null) && !GameOverlayOpen;
+            if (!GameInputBlocked) HandleKeys();
+            GUI.enabled = (selected == null) && !GameInputBlocked;
             DrawHeader();
-            GUI.enabled = (selected == null && page == FoundryPage.Board) && !GameOverlayOpen;
+            GUI.enabled = (selected == null && page == FoundryPage.Board) && !GameInputBlocked;
             DrawBuildMenu(); DrawBoard(); DrawSidebar();
-            GUI.enabled = (true) && !GameOverlayOpen;
+            GUI.enabled = (true) && !GameInputBlocked;
             Fill(new Rect(24, 818, 1392, 58), Panel);
             Label(new Rect(42, 828, 1352, 35), notice, text);
             if (page == FoundryPage.Exchange) DrawExchange();
             if (page == FoundryPage.Management) DrawManagement();
             if (selected != null) DrawPopup();
             if (GameOverlayOpen) DrawGameOverlay();
+            if (tutorialGuide) DrawGuidedTutorial();
             GUI.matrix = oldMatrix; GUI.color = oldColor; GUI.enabled = oldEnabled;
         }
         private void HandleKeys()
@@ -237,7 +241,7 @@ namespace CometFoundry.Prototype
                 Fill(new Rect(position.x - 5, position.y - 3, 10, 6), Ink); Fill(new Rect(position.x - 2, position.y - 2, 4, 4), Orange);
             }
             var e = Event.current;
-            if (GameOverlayOpen || selected != null || page != FoundryPage.Board || !MapRect.Contains(e.mousePosition)) return;
+            if (GameInputBlocked || selected != null || page != FoundryPage.Board || !MapRect.Contains(e.mousePosition)) return;
             Vector2Int hover = new Vector2Int(Mathf.FloorToInt((e.mousePosition.x - MapRect.x) / MapCell), session.Comet.Grid.Height - 1 - Mathf.FloorToInt((e.mousePosition.y - MapRect.y) / MapCell));
             if (build != null)
             {
@@ -255,7 +259,7 @@ namespace CometFoundry.Prototype
             }
             else if (build != null && !demolishMode)
             {
-                if (session.Build(build, hover, out var message)) build = null;
+                if (session.Build(build, hover, out var message)) { build = null; CheckGuidedConstruction(); }
                 notice = message;
             }
             else
@@ -284,10 +288,10 @@ namespace CometFoundry.Prototype
                 Label(new Rect(181, y, 51, 24), amount.ToString("0.#"), amount > 0 ? text : small); y += 28;
             }
             GUI.EndScrollView();
-            bool enabled = GUI.enabled; GUI.enabled = (enabled && session.HasMarket) && !GameOverlayOpen;
+            bool enabled = GUI.enabled; GUI.enabled = (enabled && session.HasMarket) && !GameInputBlocked;
             if (Btn(new Rect(1150, 714, 246, 33), "거래소 열기")) OpenExchange();
             if (Btn(new Rect(1150, 752, 246, 33), "혜성관리")) { page = FoundryPage.Management; build = null; }
-            GUI.enabled = (enabled) && !GameOverlayOpen;
+            GUI.enabled = (enabled) && !GameInputBlocked;
         }
         private void DrawPopup()
         {
@@ -305,9 +309,9 @@ namespace CometFoundry.Prototype
             float y = 287;
             foreach (var recipe in selected.Definition.SupportedRecipes)
             {
-                GUI.enabled = (session.CanSelect(selected, recipe)) && !GameOverlayOpen;
+                GUI.enabled = (session.CanSelect(selected, recipe)) && !GameInputBlocked;
                 if (Btn(new Rect(274, y, 254, 55), recipe.DisplayName + (recipe == selected.ActiveRecipe ? "  • 가동" : ""), preview == recipe)) preview = recipe;
-                GUI.enabled = (true) && !GameOverlayOpen; y += 64;
+                GUI.enabled = (true) && !GameInputBlocked; y += 64;
             }
             if (preview == null) return;
             Label(new Rect(557, 251, 595, 31), preview.DisplayName, heading);
@@ -367,7 +371,8 @@ namespace CometFoundry.Prototype
         private bool Btn(Rect rect, string value, bool accent = false)
         {
             Color old = GUI.backgroundColor; GUI.backgroundColor = accent ? Orange : new Color32(63, 82, 90, 255);
-            bool result = GUI.Button(rect, value, button); GUI.backgroundColor = old; return result;
+            bool enabled = GUI.enabled; if (tutorialGuide && !drawingGuide && (TutorialPausesTime || TutorialPointerOverPopup)) GUI.enabled = false;
+            bool result = GUI.Button(rect, value, button); GUI.enabled = enabled; GUI.backgroundColor = old; return result;
         }
     }
 }

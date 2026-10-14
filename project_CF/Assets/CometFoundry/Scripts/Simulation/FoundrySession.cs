@@ -38,10 +38,15 @@ namespace CometFoundry.Simulation
         private double flightDuration { get => colonies[activeColony].FlightDuration; set => colonies[activeColony].FlightDuration = value; }
         private double pending, saleTimer;
         private int nextId;
+        // Runtime observations for guided production; purchases never count as production.
+        private readonly Dictionary<FacilityInstance, Dictionary<string, double>> guidedProduction = new Dictionary<FacilityInstance, Dictionary<string, double>>();
+        public double ProducedBy(FacilityInstance facility, string recipeId)
+            => facility != null && guidedProduction.TryGetValue(facility, out var recipes) && recipes.TryGetValue(recipeId, out var amount) ? amount : 0;
 
         public FoundrySession() { NewGame(); }
         public void NewGame()
         {
+            guidedProduction.Clear();
             Company = new CompanyState(80000);
             colonies.Clear(); activeColony = 0;
             colonies.Add(new FoundryColony(new CometState(new SimulationId("home"), "헤스티아 / HESTIA", Vector2.zero, 8, Width, Height), "헤스티아"));
@@ -146,6 +151,11 @@ namespace CometFoundry.Simulation
                         if (facility.Definition.FacilityType == FacilityType.Mine && (deposit == null || deposit.RemainingStacks < facility.ActiveRecipe.Outputs[0].Stacks)) continue;
                         if (facility.TickProduction(0.1d / 300d, Company))
                         {
+                            if (!guidedProduction.TryGetValue(facility, out var observed))
+                                guidedProduction[facility] = observed = new Dictionary<string, double>();
+                            var recipeId = facility.ActiveRecipe.RecipeId;
+                            observed.TryGetValue(recipeId, out var made);
+                            observed[recipeId] = made + facility.ActiveRecipe.Outputs[0].Stacks;
                             RecordPracticeProduction(facility.ActiveRecipe);
                             if (deposit != null) deposit.ExtractStacks(facility.ActiveRecipe.Outputs[0].Stacks);
                             if (c == 0) foreach (var output in facility.ActiveRecipe.Outputs)

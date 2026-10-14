@@ -8,6 +8,7 @@ using CometFoundry.Simulation;
 using UnityEditor;
 using UnityEditor.Build.Reporting;
 using UnityEditor.SceneManagement;
+using UnityEditor.TestTools.TestRunner.Api;
 using UnityEngine;
 
 // Validation can run inside the already-open Unity editor, without opening a second project instance.
@@ -18,6 +19,9 @@ public static class FoundryValidation
     private const string PreviewRequest = "Temp/FoundryPreviewBuild.request";
     private const string RevisionRequest = "Temp/FoundryRevisionValidation.request";
     private const string MonthlyRequest = "Temp/FoundryMonthlyValidation.request";
+    private const string TutorialTestRequest = "Temp/FoundryTutorialTests.request";
+    private const string TutorialBuildRequest = "Temp/FoundryTutorialBuild.request";
+    private static bool tutorialTestsRunning;
     static FoundryValidation() { EditorApplication.update += CheckRequest; }
     [MenuItem("Comet Foundry/Open Playable Scene")]
     public static void OpenPlayable()
@@ -46,7 +50,15 @@ public static class FoundryValidation
     }
     private static void CheckRequest()
     {
-        if (EditorApplication.isCompiling || EditorApplication.isPlayingOrWillChangePlaymode) return;
+        if (EditorApplication.isCompiling || EditorApplication.isPlayingOrWillChangePlaymode || tutorialTestsRunning) return;
+        if (File.Exists(TutorialTestRequest)) { File.Delete(TutorialTestRequest); RunTutorialTests(); return; }
+        if (File.Exists(TutorialBuildRequest))
+        {
+            File.Delete(TutorialBuildRequest);
+            try { BuildPlayable(); File.WriteAllText("ValidationArtifacts/GuidedTutorial-expansion-build.txt", "PASS"); }
+            catch (Exception exception) { File.WriteAllText("ValidationArtifacts/GuidedTutorial-expansion-build.txt", "FAIL: " + exception); Debug.LogException(exception); }
+            return;
+        }
         if (File.Exists(PreviewRequest))
         {
             File.Delete(PreviewRequest);
@@ -64,6 +76,35 @@ public static class FoundryValidation
         if (File.Exists(MonthlyRequest)) { File.Delete(MonthlyRequest); RunMonthly(); return; }
         if (!File.Exists(Request)) return;
         File.Delete(Request); Run();
+    }
+    [MenuItem("Comet Foundry/Validate Guided Tutorial")]
+    public static void RunTutorialTests()
+    {
+        Directory.CreateDirectory("ValidationArtifacts");
+        var api = ScriptableObject.CreateInstance<TestRunnerApi>();
+        var callbacks = new TutorialTestCallbacks(api);
+        api.RegisterCallbacks(callbacks);
+        tutorialTestsRunning = true;
+        try
+        {
+            api.Execute(new ExecutionSettings(new Filter { testMode = TestMode.EditMode, groupNames = new[] {
+                "CometFoundry.Tests.FoundryGuidedTutorialTests", "CometFoundry.Tests.FoundryRevisionTests",
+                "CometFoundry.Tests.FoundryProductionTests", "CometFoundry.Tests.FoundryManagementTests" } }));
+        }
+        catch { tutorialTestsRunning = false; api.UnregisterCallbacks(callbacks); UnityEngine.Object.DestroyImmediate(api); throw; }
+    }
+    private sealed class TutorialTestCallbacks : ICallbacks
+    {
+        private readonly TestRunnerApi api;
+        public TutorialTestCallbacks(TestRunnerApi runner) { api = runner; }
+        public void RunStarted(ITestAdaptor tests) { }
+        public void TestStarted(ITestAdaptor test) { }
+        public void TestFinished(ITestResultAdaptor result) { }
+        public void RunFinished(ITestResultAdaptor result)
+        {
+            try { TestRunnerApi.SaveResultToFile(result, "ValidationArtifacts/GuidedTutorial-expansion-tests.xml"); }
+            finally { tutorialTestsRunning = false; api.UnregisterCallbacks(this); UnityEngine.Object.DestroyImmediate(api); }
+        }
     }
     [MenuItem("Comet Foundry/Validate Playable Game")]
     public static void Run()
