@@ -45,7 +45,7 @@ namespace CometFoundry.Tests
             Assert.AreEqual(FacilityType.DroneHangar, hangar.FacilityType);
             Assert.AreEqual(new Vector2Int(2, 2), hangar.FootprintSize);
             Assert.AreEqual(0d, hangar.BasePowerConsumption);
-            Assert.AreEqual(32, hangar.DroneCapacity);
+            Assert.AreEqual(8, hangar.DroneCapacity);
             Assert.AreEqual(8, hangar.DroneLinkCapacity);
         }
 
@@ -68,13 +68,13 @@ namespace CometFoundry.Tests
             ResourceDefinition ore = ScriptableObject.CreateInstance<ResourceDefinition>();
             ore.ConfigurePrototype("ore", "Ore", ResourceCategory.Raw, 100d, true);
             DroneLogisticsSystem drones = new DroneLogisticsSystem();
-            drones.TryCreateDedicatedLink(comet, new SimulationId("link"), hangar, source, destination, ore, 5, out _);
+            Assert.IsTrue(drones.TryCreateDedicatedLink(comet, new SimulationId("link"), hangar, source, destination, ore, 4, out _));
 
             PowerReport report = new PowerSystem().Calculate(comet);
 
             Assert.AreEqual(16d, report.GeneratedPower);
-            Assert.AreEqual(7d, report.ConsumedPower);
-            Assert.AreEqual(9d, report.AvailablePower);
+            Assert.AreEqual(6d, report.ConsumedPower);
+            Assert.AreEqual(10d, report.AvailablePower);
             Assert.IsFalse(report.HasDeficit);
         }
     }

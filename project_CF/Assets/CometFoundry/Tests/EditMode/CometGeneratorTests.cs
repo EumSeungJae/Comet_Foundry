@@ -20,12 +20,46 @@ namespace CometFoundry.Tests
             Assert.AreEqual(9, CometGenerator.GetGridSize(CometGrade.F));
 
             Assert.AreEqual(1f, CometGenerator.GetBuildableRatio(CometGrade.S));
-            Assert.AreEqual(0.9f, CometGenerator.GetBuildableRatio(CometGrade.A));
-            Assert.AreEqual(0.8f, CometGenerator.GetBuildableRatio(CometGrade.B));
-            Assert.AreEqual(0.7f, CometGenerator.GetBuildableRatio(CometGrade.C));
-            Assert.AreEqual(0.6f, CometGenerator.GetBuildableRatio(CometGrade.D));
-            Assert.AreEqual(0.5f, CometGenerator.GetBuildableRatio(CometGrade.E));
-            Assert.AreEqual(0.4f, CometGenerator.GetBuildableRatio(CometGrade.F));
+            Assert.AreEqual(0.98f, CometGenerator.GetBuildableRatio(CometGrade.A));
+            Assert.AreEqual(0.96f, CometGenerator.GetBuildableRatio(CometGrade.B));
+            Assert.AreEqual(0.94f, CometGenerator.GetBuildableRatio(CometGrade.C));
+            Assert.AreEqual(0.92f, CometGenerator.GetBuildableRatio(CometGrade.D));
+            Assert.AreEqual(0.90f, CometGenerator.GetBuildableRatio(CometGrade.E));
+            Assert.AreEqual(0.88f, CometGenerator.GetBuildableRatio(CometGrade.F));
+        }
+
+        [TestCase(CometGrade.S)]
+        [TestCase(CometGrade.A)]
+        [TestCase(CometGrade.B)]
+        [TestCase(CometGrade.C)]
+        [TestCase(CometGrade.D)]
+        [TestCase(CometGrade.E)]
+        [TestCase(CometGrade.F)]
+        public void DamagePreservesConnectedInteriorAcrossSizesAndSeeds(CometGrade grade)
+        {
+            var pattern = typeof(CometGenerator).GetMethod("ApplyBuildablePattern", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+            for (int size = 9; size <= 16; size++) for (int seed = 0; seed < 16; seed++)
+            {
+                var grid = new CometGrid(size, size);
+                float ratio = CometGenerator.GetBuildableRatio(grade);
+                pattern.Invoke(new CometGenerator(seed), new object[] { grid, ratio });
+                int expected = Mathf.RoundToInt(size * size * ratio);
+                Assert.AreEqual(expected, CountBuildableTiles(grid), $"{grade}/{size}/{seed}");
+                for (int y = 1; y < size - 1; y++) for (int x = 1; x < size - 1; x++)
+                    Assert.IsTrue(grid.GetTile(new Vector2Int(x,y)).IsDroneNavigable, "Interior must remain open");
+                var visited = new HashSet<Vector2Int>(); var pending = new Queue<Vector2Int>();
+                pending.Enqueue(new Vector2Int(1,1)); visited.Add(new Vector2Int(1,1));
+                while (pending.Count > 0)
+                {
+                    var p = pending.Dequeue();
+                    foreach (var d in new[] { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right })
+                    {
+                        var next = p + d;
+                        if (grid.GetTile(next)?.IsDroneNavigable == true && visited.Add(next)) pending.Enqueue(next);
+                    }
+                }
+                Assert.AreEqual(expected, visited.Count, "All active tiles must share a drone route");
+            }
         }
 
         [Test]

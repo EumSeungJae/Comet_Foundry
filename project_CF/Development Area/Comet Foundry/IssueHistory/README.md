@@ -12,6 +12,7 @@
 | [기술 부족 사항 목록](TechnicalGapList.md) | 2026-08-26 당시 미완성 기술 13개 분야와 필요 작업 | Assets/CometFoundry/Docs/TechnicalGapList.md |
 | [검증 보고서 — 2026-10-08](ValidationReport-2026-10-08.md) | 전체 55개 테스트 중 5개 실패 기록과 시각 검증 한계 | Development Area/Comet Foundry/Validation/Report.md |
 | [게임플레이 수정 검증](GameplayRevision-review.md) | 회귀 테스트 결과와 팝업 시각 검수 미완료 기록 | ValidationArtifacts/GameplayRevision/review.md |
+| [중복 시설 생산 중단 수정](ProductionStall-2026-10-14.md) | 재료 2스택에서 대기하는 정제소와 중복 채굴기·가공소의 드론 배정 편중 재현·수정 | Development Area/Comet Foundry/Validation/ProductionStall-2026-10-14/README.md |
 
 ## 실행 로그
 

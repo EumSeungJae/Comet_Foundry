@@ -75,13 +75,14 @@ namespace CometFoundry.Tests
             Assert.AreEqual(92, company.Credits);
             Assert.AreEqual(2d / 300, facility.ProgressDays, 1e-8);
         }
-        [Test] public void StarterGame_HasFourFacilitiesAndMinesWithoutAutomaticSales()
+        [Test] public void StarterGame_HasExplicitDroneStorageAndMinesWithoutAutomaticSales()
         {
             using (var session = new FoundrySession())
             {
                 Assert.IsFalse(session.Power.HasDeficit);
                 session.Advance(180);
-                Assert.AreEqual(4, session.Comet.Facilities.Count);
+                Assert.AreEqual(5, session.Comet.Facilities.Count);
+                Assert.AreEqual(4, session.DroneWorkerCapacity);
                 Assert.AreEqual(0, session.Sales);
                 Assert.Less(session.Comet.Deposits[0].RemainingStacks, 2400);
                 Assert.Greater(session.TotalStock(session.Content.FindResource("iron-ore")), 0);

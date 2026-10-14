@@ -49,6 +49,44 @@ namespace CometFoundry.Tests
             Assert.AreEqual(DroneHaulRequestType.MarketReservation, selected.RequestType);
         }
 
+        [Test]
+        public void EqualPriority_UsesOldestRouteWithoutPromotingStorageAboveProduction()
+        {
+            var ore = CreateResource();
+            var source = CreateFacility("source", 30);
+            var first = CreateFacility("first", 10);
+            var second = CreateFacility("second", 10);
+            try
+            {
+                source.Inventory.AddStacks(ore, 6);
+                var recent = new DroneHaulRequest(DroneHaulRequestType.ProductionInput, source, first, ore, 2, 9, 16);
+                var waiting = new DroneHaulRequest(DroneHaulRequestType.ProductionInput, source, second, ore, 2, 9, 160);
+                var storage = new DroneHaulRequest(DroneHaulRequestType.Storage, source, first, ore, 2, 9, 100000);
+                Assert.AreSame(waiting, new DroneWorkPlanner().SelectNextRequest(new[] { recent, storage, waiting }));
+            }
+            finally
+            {
+                Object.DestroyImmediate(ore);
+                Object.DestroyImmediate(source.Definition); Object.DestroyImmediate(first.Definition); Object.DestroyImmediate(second.Definition);
+            }
+        }
+
+        [Test]
+        public void UrgentInput_StillOutranksAnOlderBufferTopUp()
+        {
+            var ore = CreateResource();
+            var source = CreateFacility("source", 30);
+            var destination = CreateFacility("destination", 10);
+            try
+            {
+                source.Inventory.AddStacks(ore, 6);
+                var topUp = new DroneHaulRequest(DroneHaulRequestType.ProductionInput, source, destination, ore, 2, 4, 100000);
+                var urgent = new DroneHaulRequest(DroneHaulRequestType.ProductionInput, source, destination, ore, 2, 5, 0);
+                Assert.AreSame(urgent, new DroneWorkPlanner().SelectNextRequest(new[] { topUp, urgent }));
+            }
+            finally { Object.DestroyImmediate(ore); Object.DestroyImmediate(source.Definition); Object.DestroyImmediate(destination.Definition); }
+        }
+
         private static ResourceDefinition CreateResource()
         {
             ResourceDefinition resource = ScriptableObject.CreateInstance<ResourceDefinition>();

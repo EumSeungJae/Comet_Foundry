@@ -13,9 +13,14 @@ namespace CometFoundry.Simulation
         public CometState State { get; }
         public string Name { get; }
         public double Revenue { get; internal set; }
-        internal DroneHaulRequest Flight;
-        internal double FlightElapsed, FlightDuration;
+        internal readonly List<FoundryDroneFlight> DroneFlights = new List<FoundryDroneFlight>();
+        internal readonly Dictionary<(FacilityInstance, FacilityInstance), FoundryDroneRoute> DroneRoutes
+            = new Dictionary<(FacilityInstance, FacilityInstance), FoundryDroneRoute>();
+        internal int DroneDeliveries;
+        internal double DroneDeliveredStacks;
         internal readonly Dictionary<FacilityInstance, double> LastSupply = new Dictionary<FacilityInstance, double>();
+        internal readonly Dictionary<(FacilityInstance Source, FacilityInstance Destination, ResourceDefinition Resource), double> LastHaul
+            = new Dictionary<(FacilityInstance, FacilityInstance, ResourceDefinition), double>();
     }
     public sealed class FoundryProspect
     {

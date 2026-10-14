@@ -172,10 +172,12 @@ namespace CometFoundry.Simulation
                     facility.Inventory.RemoveStacks(stock.Key, moved); remaining -= moved;
                 }
             }
-            if (Flight != null && (Flight.Source == facility || Flight.Destination == facility)) Flight = null;
+            CancelDroneJobsFor(facility);
             lastSupply.Remove(facility);
             foreach (var tile in Comet.Grid.GetFootprintTiles(facility.Anchor, facility.Definition.FootprintSize)) tile.ClearOccupant();
             Comet.RemoveFacility(facility);
+            var haulHistory = colonies[activeColony].LastHaul;
+            foreach (var route in haulHistory.Keys.Where(r => r.Source == facility || r.Destination == facility).ToList()) haulHistory.Remove(route);
             message = facility.Definition.DisplayName + " 철거 완료. 재고는 이관했으며 건설비는 환불되지 않습니다.";
             return true;
         }

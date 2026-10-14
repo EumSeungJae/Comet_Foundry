@@ -15,6 +15,9 @@ namespace CometFoundry.Simulation
             return requests
                 .Where(IsExecutable)
                 .OrderByDescending(request => request.PriorityScore)
+                // Bounded priority bonuses can tie forever for intermittent supplies.
+                // Compare uncapped route wait time without crossing production/market/storage tiers.
+                .ThenByDescending(request => request.WaitingSeconds)
                 .FirstOrDefault();
         }
 

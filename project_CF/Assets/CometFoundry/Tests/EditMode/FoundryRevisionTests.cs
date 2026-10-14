@@ -117,8 +117,8 @@ namespace CometFoundry.Tests
         {
             using (var s = new FoundrySession()) using (var loaded = new FoundrySession())
             {
-                Assert.IsTrue(s.Demolish(s.Comet.Facilities.First(f => f.Definition.IsWarehouse), out _)); Assert.IsFalse(s.HasLogistics);
-                var storage = s.Content.FindBuilding("drone-storage"); Assert.AreEqual(new Vector2Int(1, 2), storage.FootprintSize); Assert.AreEqual(8, storage.DroneCapacity);
+                Assert.IsTrue(s.Demolish(s.Comet.Facilities.First(f => f.Definition.IsDroneHangar), out _)); Assert.IsFalse(s.HasLogistics);
+                var storage = s.Content.FindBuilding("drone-storage"); Assert.AreEqual(new Vector2Int(1, 2), storage.FootprintSize); Assert.AreEqual(4, storage.DroneCapacity);
                 Assert.IsTrue(s.Build(storage, new Vector2Int(5, 3), out _)); Assert.IsTrue(s.HasHangar); Assert.IsTrue(s.HasLogistics);
                 Assert.IsTrue(s.Build(s.Content.FindBuilding("refinery-basic"), new Vector2Int(5, 6), out _));
                 s.FacilityAt(new Vector2Int(5, 6)).AssignRecipe(s.Content.FindRecipe("smelt-iron")); s.Advance(60);
@@ -132,7 +132,7 @@ namespace CometFoundry.Tests
             using (var s = new FoundrySession())
             {
                 BuildMarket(s); s.Explore(out _); s.Advance(8.1); Assert.IsTrue(s.Colonize(0, out _)); s.SwitchColony(1);
-                Assert.IsTrue(s.Power.HasDeficit); StringAssert.Contains("전력 부족", s.DroneStatus);
+                Assert.IsTrue(s.Power.HasDeficit); StringAssert.Contains("건설 필요", s.DroneStatus);
                 foreach (string id in new[] { "drone-storage", "power-plant-small", "power-plant-small" })
                 {
                     var definition = s.Content.FindBuilding(id);

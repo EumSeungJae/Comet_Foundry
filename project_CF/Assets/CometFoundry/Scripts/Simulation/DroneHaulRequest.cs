@@ -19,7 +19,8 @@ namespace CometFoundry.Simulation
             FacilityInstance destination,
             ResourceDefinition resource,
             double requestedStacks,
-            int buildingPriority = 0)
+            int buildingPriority = 0,
+            double waitingSeconds = 0d)
         {
             RequestType = requestType;
             Source = source;
@@ -27,6 +28,7 @@ namespace CometFoundry.Simulation
             Resource = resource;
             RequestedStacks = Math.Max(0d, requestedStacks);
             BuildingPriority = Math.Max(0, buildingPriority);
+            WaitingSeconds = double.IsNaN(waitingSeconds) || double.IsInfinity(waitingSeconds) ? 0d : Math.Max(0d, waitingSeconds);
         }
 
         public DroneHaulRequestType RequestType { get; }
@@ -35,6 +37,7 @@ namespace CometFoundry.Simulation
         public ResourceDefinition Resource { get; }
         public double RequestedStacks { get; }
         public int BuildingPriority { get; }
+        public double WaitingSeconds { get; }
         public int PriorityScore => GetTypePriority(RequestType) * 1000 + BuildingPriority * 100;
 
         public static int GetTypePriority(DroneHaulRequestType requestType)

@@ -94,6 +94,33 @@ namespace CometFoundry.Simulation
             return GetPathSpeedMultiplier(comet, source, destination) > 0d;
         }
 
+        public List<Vector2Int> FindNavigablePath(CometState comet, FacilityInstance source, FacilityInstance destination)
+        {
+            if (comet == null || source == null || destination == null) return null;
+            var goals = new HashSet<Vector2Int>(GetAdjacentNavigableTiles(comet, destination));
+            var queue = new Queue<Vector2Int>(); var visited = new HashSet<Vector2Int>();
+            var parent = new Dictionary<Vector2Int, Vector2Int>();
+            foreach (var start in GetAdjacentNavigableTiles(comet, source))
+                if (visited.Add(start)) queue.Enqueue(start);
+            while (queue.Count > 0)
+            {
+                var tile = queue.Dequeue();
+                if (goals.Contains(tile))
+                {
+                    var path = new List<Vector2Int> { tile };
+                    while (parent.TryGetValue(tile, out var previous)) { path.Add(previous); tile = previous; }
+                    path.Reverse(); return path;
+                }
+                foreach (var direction in new[] { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right })
+                {
+                    var next = tile + direction;
+                    if (!IsDroneNavigable(comet, next) || !visited.Add(next)) continue;
+                    parent[next] = tile; queue.Enqueue(next);
+                }
+            }
+            return null;
+        }
+
         public double GetPathSpeedMultiplier(CometState comet, FacilityInstance source, FacilityInstance destination)
         {
             if (comet == null || source == null || destination == null)

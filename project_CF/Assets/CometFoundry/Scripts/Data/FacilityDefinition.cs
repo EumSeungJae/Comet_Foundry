@@ -123,7 +123,7 @@ namespace CometFoundry.Data
         {
             var storage = CreateInstance<FacilityDefinition>();
             storage.ConfigurePrototype("drone-storage", "드론저장소", FacilityType.DroneHangar,
-                new Vector2Int(1, 2), 0d, 1800d, 0d, 0d, 8, 4);
+                new Vector2Int(1, 2), 0d, 1800d, 0d, 0d, 4, 4);
             return storage;
         }
 
@@ -139,7 +139,7 @@ namespace CometFoundry.Data
                 4000d,
                 20d,
                 0d,
-                32,
+                8,
                 8);
             return hangar;
         }

@@ -86,7 +86,7 @@ namespace CometFoundry.Prototype
                 var c = session.Colonies[i]; float y = i * 95;
                 if (Btn(new Rect(0, y, 654, 88), "", i == session.ActiveColonyIndex)) { session.SwitchColony(i); build = null; selected = null; demolishMode = false; }
                 Label(new Rect(12, y + 5, 625, 24), c.Name + "  /  " + c.State.DistanceCode, heading);
-                Label(new Rect(12, y + 32, 625, 23), "자원: " + string.Join(" · ", c.State.Deposits.Select(d => d.Resource.DisplayName + " " + d.RemainingStacks.ToString("N0"))), small);
+                Label(new Rect(12, y + 32, 625, 23), "자원: " + string.Join(" · ", c.State.Deposits.GroupBy(d => d.Resource).Select(g => g.Key.DisplayName + " " + g.Sum(d => d.RemainingStacks).ToString("N0"))), small);
                 Label(new Rect(12, y + 58, 625, 23), $"누적 판매 수익 {c.Revenue:N0} 솔라  ·  시설 {c.State.Facilities.Count}개", text);
             }
             GUI.EndScrollView();
@@ -109,7 +109,7 @@ namespace CometFoundry.Prototype
                 var p = session.Prospects[i]; float y = 352 + i * 107;
                 if (Btn(new Rect(780, y, 610, 99), "", prospectIndex == i)) prospectIndex = i;
                 Label(new Rect(794, y + 6, 580, 25), $"후보 {i + 1}  ·  {p.State.DistanceCode}  ·  {p.State.Grid.Width}×{p.State.Grid.Height}", heading);
-                Label(new Rect(794, y + 35, 580, 31), string.Join(" · ", p.State.Deposits.Select(d => d.Resource.DisplayName + " " + d.RemainingStacks.ToString("N0"))), small);
+                Label(new Rect(794, y + 35, 580, 31), string.Join(" · ", p.State.Deposits.GroupBy(d => d.Resource).Select(g => g.Key.DisplayName + " " + g.Sum(d => d.RemainingStacks).ToString("N0"))), small);
                 Label(new Rect(794, y + 69, 580, 23), $"개척 비용 {p.Cost:N0} 솔라 (항구 포함)", text);
             }
             if (session.Prospects.Count == 0) Label(new Rect(792, 397, 590, 90), "탐사를 시작하면 발견한 혜성이 표시됩니다.\n개척 후 좌측 혜성 슬롯을 선택하여 건설할 수 있습니다.", small);

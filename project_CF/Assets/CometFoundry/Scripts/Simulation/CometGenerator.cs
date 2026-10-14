@@ -136,17 +136,17 @@ namespace CometFoundry.Simulation
                 case CometGrade.S:
                     return 1f;
                 case CometGrade.A:
-                    return 0.9f;
+                    return 0.98f;
                 case CometGrade.B:
-                    return 0.8f;
+                    return 0.96f;
                 case CometGrade.C:
-                    return 0.7f;
+                    return 0.94f;
                 case CometGrade.D:
-                    return 0.6f;
+                    return 0.92f;
                 case CometGrade.E:
-                    return 0.5f;
+                    return 0.90f;
                 default:
-                    return 0.4f;
+                    return 0.88f;
             }
         }
 
@@ -288,11 +288,44 @@ namespace CometFoundry.Simulation
             int targetBuildableTiles = Mathf.RoundToInt(tileCount * Mathf.Clamp01(buildableRatio));
             int inactiveTiles = Mathf.Max(0, tileCount - targetBuildableTiles);
 
-            for (int i = 0; i < inactiveTiles; i++)
+            // Damage the outer rim, preserving an uninterrupted interior for construction and logistics.
+            var rim = new List<Vector2Int>();
+            for (int y = 0; y < grid.Height; y++) for (int x = 0; x < grid.Width; x++)
+                if (x == 0 || y == 0 || x == grid.Width - 1 || y == grid.Height - 1) rim.Add(new Vector2Int(x, y));
+            for (int i = rim.Count - 1; i > 0; i--)
             {
-                Vector2Int coordinate = PickActiveTile(grid);
-                grid.GetTile(coordinate).SetTerrain(CometTileTerrain.Void);
+                int pick = random.Next(i + 1);
+                var swap = rim[i]; rim[i] = rim[pick]; rim[pick] = swap;
             }
+            int removed = 0;
+            foreach (var coordinate in rim)
+            {
+                if (removed >= inactiveTiles) break;
+                var previous = grid.GetTile(coordinate).Terrain;
+                grid.GetTile(coordinate).SetTerrain(CometTileTerrain.Void);
+                if (ActiveTilesConnected(grid, tileCount - removed - 1)) removed++;
+                else grid.GetTile(coordinate).SetTerrain(previous);
+            }
+        }
+
+        private static bool ActiveTilesConnected(CometGrid grid, int expected)
+        {
+            var queue = new Queue<Vector2Int>(); var visited = new HashSet<Vector2Int>();
+            var start = new Vector2Int(grid.Width / 2, grid.Height / 2);
+            queue.Enqueue(start); visited.Add(start);
+            var directions = new[] { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
+            while (queue.Count > 0)
+            {
+                var current = queue.Dequeue();
+                foreach (var direction in directions)
+                {
+                    var next = current + direction;
+                    var tile = grid.GetTile(next);
+                    if (tile == null || tile.Terrain == CometTileTerrain.Void || !visited.Add(next)) continue;
+                    queue.Enqueue(next);
+                }
+            }
+            return visited.Count == expected;
         }
 
         private void AddResourceNodes(CometState comet, ResourceDefinition resource, double totalStacks)

@@ -1,0 +1,357 @@
+[
+  {
+    "path": "Assets/CometFoundry/Editor/FoundryValidation.cs",
+    "sha256": "1ef95a7e54330cf126a5d39db548ec165955a529938e07256ab00461de1eeb1c",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Core/Currency.cs",
+    "sha256": "35d7eef92d34fb06af2235e6539acf5baeb4a76ba3892a972fc56df3b6d4ef1a",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Core/Inventory.cs",
+    "sha256": "60a9b19de052cb03eb0aedaae33f49c48b934ff13dcf2ac14cbb3263885d2e3b",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Core/SimulationClock.cs",
+    "sha256": "019d4532184e333374580436132673a4a84aa8c94ec0d30b472bc200a4629faf",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Core/SimulationId.cs",
+    "sha256": "cb1fa8fc5a3f495137918fb72f938e9713952b6e072bbd116eed79f734b483b1",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Data/CargoShipDefinition.cs",
+    "sha256": "9879c2f10efefe565ac9eda8305cd35f4ace38068c8121b6b1f946ffe6991237",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Data/CometGenerationProfile.cs",
+    "sha256": "cc7a8fed14c1148d23fa3f1eb33db018b068078f980b847bec3d698f5a25a389",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Data/FacilityCatalog.cs",
+    "sha256": "bbe30ae8268ad828ae7dc198107bce3bbfa40d7689e1b0a2f36c78634a0d9513",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Data/FacilityDefinition.cs",
+    "sha256": "e57b76d74441d2879d9117cb53d040a2b6e9b1a39cc8f35ea1fea885277134a4",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Data/FoundryContent.cs",
+    "sha256": "428e0a58ba27d9d8ba21c872835337bfa5d6a29991f70a8faede624e72c5454f",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Data/RecipeDefinition.cs",
+    "sha256": "74a4a0a0e24ed79cb18f0aa2b19cf1382d12de30df5f51a4a9404d2e9840b66f",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Data/ResearchDefinition.cs",
+    "sha256": "4f2bb81ef155884eea9af99e9297bab5b72eb96be5e5c3148fad4a8c025b8af6",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Data/ResourceDefinition.cs",
+    "sha256": "8d1fc00af6da982fdb0a6b074be0a5001efec841afd1b67516e3b8130e588917",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Prototype/ConstructionTestSceneController.cs",
+    "sha256": "244a7df10a538a9b1cabe90caf5064492b68177393f4b633ee8b5b0f7221bb49",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Prototype/FoundryBuildingArt.cs",
+    "sha256": "d741c63f1336aa7b565640de346985293e7d9bc930d2770396ecf437976f74dd",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Prototype/FoundryChartRaster.cs",
+    "sha256": "d4e575ed90570025958abe75f4801987cc2159183697921817e3e63b0b0e3a8b",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Prototype/FoundryGuidedTutorialUI.cs",
+    "sha256": "f77d987682e1110c78c7ec8c4e703903c23a24beae0d1bddd9d57fa02c8f4511",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Prototype/FoundryGuidesAndMissionsUI.cs",
+    "sha256": "3b8061cc911cf1496a637a719ec86ef7ea31074bec185ec9f3c094e008fdbbd4",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Prototype/FoundryManagementUI.cs",
+    "sha256": "7e2e095a58e9d7adcc6dc0a5f1c7236e7974448e20c084635d93a5f805fc5bd3",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Prototype/FoundryMissionPracticeUI.cs",
+    "sha256": "e97ecf4021778cab03771b0251ac1750dd390ebcd702acca0ad02c07f696b99f",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Prototype/FoundryPlayableController.cs",
+    "sha256": "6cafeff97cc25bd1abe1a60b999e857fb5eb4a8069975e386833c50eb74db113",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Prototype/FoundryResolutionReview.cs",
+    "sha256": "5b5ac83c1548b27f53be9a613a1b4f36c53ad079839afc2d31afd18e8b1a2e24",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Prototype/FoundryTitleScreen.cs",
+    "sha256": "a8253b18e0ccbdbec9e146ca85c762fd0950576dedfaf2e23359c6cf18c4c70f",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Prototype/WorldPrototypeSceneController.cs",
+    "sha256": "ae6cedf51c201f2be141dcc5aaba31f6f50c8a62df995bcefb5e362a8440e2bf",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Simulation/CargoShipState.cs",
+    "sha256": "e5e2364005bb0ed9e04b842846319a2368d89b064e717b19e48f12bb2cd1d673",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Simulation/CometFoundryGame.cs",
+    "sha256": "af8b8e7f4ee69cec6ed3e1e87500939e6d48cefdd1c34b4ab66a9498c37a82fc",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Simulation/CometGenerator.cs",
+    "sha256": "05910bc97a311eae5cdbdad582cac960c9cc39f02173fe8ea9c4e1e59cc71de4",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Simulation/CometGrid.cs",
+    "sha256": "12553f844a71f449912776e3e05acea5500989095e696d54107faf7492a016d1",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Simulation/CometState.cs",
+    "sha256": "a365389ef62ac91a3994c002734255902fa4720ada634566faeee1122d6b6df2",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Simulation/CometTile.cs",
+    "sha256": "a6de04452625246e38c6675e4557c1e289b18004e842d4094812e1f0af8eb3d3",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Simulation/CompanyState.cs",
+    "sha256": "9988e618e37c64e8071135a8ba339d30aa878d22d32c1d67dc7046304edb2124",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Simulation/ConveyorPathSegment.cs",
+    "sha256": "638f1bb99bfd2009759c41a22fbf2d4eaf086901e8182160b9bfe3a8690e7736",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Simulation/DroneHaulRequest.cs",
+    "sha256": "7b437f6fee912c5e7d2110fc14a8dfcc8f71079351cd6d0fc3c67ff4204d6bf5",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Simulation/DroneLogisticsLink.cs",
+    "sha256": "50a32538a401cdbde6956770584760be6db58caa907bbd72fba77892ea276eb1",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Simulation/DroneLogisticsSystem.cs",
+    "sha256": "d62828a4190815ee6fa3fcc619dc2a92111726f1886b42ab4ddd2f6e15413929",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Simulation/DroneWorkPlanner.cs",
+    "sha256": "001e3f059bf4f4bf33531c8143499dfa78e6a46a4e1d49f02e58318ef91a8adb",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Simulation/ExchangeRequest.cs",
+    "sha256": "369ca9e0476e93643cac81e89aec9d43ab5e7820290d0f070a0e3b7d8261dd9e",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Simulation/ExchangeRequestItem.cs",
+    "sha256": "826cd56e95161fb74e2898585191ae1687aa458059d8d27ef8ac21bae15e4b0e",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Simulation/ExchangeTrustState.cs",
+    "sha256": "14114a6bbf96c77b131438b93dec2b3ce1cd8efb1cadefb4ddcae0271cf5a6f5",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Simulation/FacilityInstance.cs",
+    "sha256": "3fabe0a8b9be6d570b1e6cbbe770dcafb834a9bd1995907b364f3ef3bde80450",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Simulation/FoundryExpansion.cs",
+    "sha256": "e344b7386594dfe8d82284326d9830290e2ae4a55c6103d3f944196e04bf5ce5",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Simulation/FoundryMissionPractice.cs",
+    "sha256": "7f96662d17ce587fe8fe83736da1c348bf098c499bd2e1aa946e91e1ca1164ce",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Simulation/FoundryMissionsAndDemolition.cs",
+    "sha256": "f5d64096d39e619c90e74cee5d855eef7e999a882ea88d0be35f7b7d6be1ebc8",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Simulation/FoundryPersistence.cs",
+    "sha256": "19be5c9a074782af6909ef40508148195f68ff3fe8b03da8dd381a007f47fa7f",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Simulation/FoundrySession.cs",
+    "sha256": "dd63ff0abc65c50e45c450a7f75d8aeca590ca6897b8a5f0dacaede70e628bb7",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Simulation/LogisticsSystem.cs",
+    "sha256": "645b81098f84e3f4b702512bc0c8e9b81523f8bef3ffe6120601f75430b60965",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Simulation/MarketEventSystem.cs",
+    "sha256": "0a7c5ffebdf5c95a3ff8f9461899e7f36401f0acf89ca6173a651ccdf8830f47",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Simulation/MarketSystem.cs",
+    "sha256": "44acf299e4da04309a05c289ad877c3dd227e71e82236c2231800878e2d03103",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Simulation/PlacementSystem.cs",
+    "sha256": "cc5dedc895b54e5d3af18709007fe58ce7c94790a27b054af5ecdef7d12c0091",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Simulation/PowerSystem.cs",
+    "sha256": "ef32d00dd51af9ff1cd41f460a1d7e816ed8f730ee6ddf3985324efc347de178",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Simulation/RailSegment.cs",
+    "sha256": "ba19a77b78399ab76758e6b5596aceb698bf1f9a51d300b8557ed190783bcb41",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Simulation/RequestSystem.cs",
+    "sha256": "25c132cea8c7ea1caf3a27cd6d7ed51ad06ca46e618b0d6f9ca5cf6bf6842ba8",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Simulation/ResearchSystem.cs",
+    "sha256": "b771db1ecb8db62e3525e18bd89cbfd9824edeba972f2667d65bf50c20d4225b",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Scripts/Simulation/TransportRoute.cs",
+    "sha256": "7417a28c9de773ae7d105c0a188241ae6e56ae84bfe3521ef80b5aa375ca51d1",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Tests/EditMode/CometGeneratorTests.cs",
+    "sha256": "18019abac87559a6ec59e1f0d1c8e5b19f8eec41308770a5f2b08fecd454e250",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Tests/EditMode/DroneLogisticsSystemTests.cs",
+    "sha256": "71388b041e2976cafe1310ff2feeb5f5b809b2768baf404444fcb1bbd6f4e3e4",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Tests/EditMode/DroneWorkPlannerTests.cs",
+    "sha256": "d122d5480ce09a87873d5fe7684863b832547a220d6158f43b5f9fc6f854eca9",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Tests/EditMode/FacilityCatalogTests.cs",
+    "sha256": "1120ea6f57746dacffebe3eae86b3ea21fb15caa57ad7f4e9fe2fc3c366c0b19",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Tests/EditMode/FoundryGuidedTutorialTests.cs",
+    "sha256": "6bf160291d30ef9a42779e57e9cf36993f44b81f9ff17f51763252a0514b5f38",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Tests/EditMode/FoundryManagementTests.cs",
+    "sha256": "5c562c431217da449306f0da20b8653a9c6611464548b3e38aed9c3ff35c8bb9",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Tests/EditMode/FoundryMissionCatalogTests.cs",
+    "sha256": "2878354d96115b7171a6c83de5a5da1bccfd396ad3b0500f8aa477a9c4d92271",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Tests/EditMode/FoundryProductionFairnessTests.cs",
+    "sha256": "73fd1e0bfd600df5693077dd50eb071646a96d89cae8c9f03c6b878809a412cd",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Tests/EditMode/FoundryProductionTests.cs",
+    "sha256": "f87f1d08ca3b5fbe6943a7271496fbe6da5976bc3cf6f4e7312284dc69a79b93",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Tests/EditMode/FoundryRevisionTests.cs",
+    "sha256": "5cd07dc2fb11790b869403117703e8797a24eb270d25faee182bcd7c13d2fdfd",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Tests/EditMode/InventoryTests.cs",
+    "sha256": "857cb63d4819a82d385232d7ce613581a93c379bedc1ddfd6e80197df12537ac",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Tests/EditMode/LogisticsSystemTests.cs",
+    "sha256": "1970a83be18ceb25638390b3e4fc9534030f4824bc68fdb9be2254866a7df284",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Tests/EditMode/MarketEventSystemTests.cs",
+    "sha256": "bd807f9b191fab17f5f58881c6d2ebaa6d22a82405d2c2662318addd2ed6e229",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Tests/EditMode/MarketSystemTests.cs",
+    "sha256": "eae434e63860425f0aae9eb567582edd11c00595a1a90779de0348515237000b",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Tests/EditMode/PlacementSystemTests.cs",
+    "sha256": "d8c278f5b62b01abd233da3223de56821224b5b873ed0548378aa2068cfa6d63",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Tests/EditMode/PowerSystemTests.cs",
+    "sha256": "2d9ea2706bd2a8339bdbca13d336df99a92f974672a297f077797c94aaa5ff3d",
+    "matches": true
+  },
+  {
+    "path": "Assets/CometFoundry/Tests/EditMode/RequestSystemTests.cs",
+    "sha256": "f07ce57ecde4440b5a505d94cdcf408908358bb88aa8f5e5c75efb05a1277b8c",
+    "matches": true
+  }
+]

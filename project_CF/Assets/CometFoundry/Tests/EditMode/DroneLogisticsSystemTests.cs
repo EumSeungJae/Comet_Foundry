@@ -41,7 +41,7 @@ namespace CometFoundry.Tests
             ResourceDefinition ore = CreateResource();
             DroneLogisticsSystem drones = new DroneLogisticsSystem();
 
-            bool created = drones.TryCreateDedicatedLink(comet, new SimulationId("link"), hangar, source, destination, ore, 33, out _);
+            bool created = drones.TryCreateDedicatedLink(comet, new SimulationId("link"), hangar, source, destination, ore, 9, out _);
 
             Assert.IsFalse(created);
             Assert.AreEqual(0, comet.DroneLinks.Count);

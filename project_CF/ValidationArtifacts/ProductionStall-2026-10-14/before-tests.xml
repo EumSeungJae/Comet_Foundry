@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="3" result="Failed(Child)" total="3" passed="0" failed="3" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-10-14 13:25:31Z" end-time="2026-10-14 13:25:32Z" duration="0.2374607">
+  <test-suite type="TestSuite" id="1000" name="project_CF" fullname="project_CF" runstate="Runnable" testcasecount="94" result="Failed" site="Child" start-time="2026-10-14 13:25:31Z" end-time="2026-10-14 13:25:32Z" duration="0.237461" total="3" passed="0" failed="3" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1113" name="CometFoundry.EditModeTests.dll" fullname="D:/Programming/Comet_Foundry/project_CF/ValidationArtifacts/ProductionStallReviewProject/Library/ScriptAssemblies/CometFoundry.EditModeTests.dll" runstate="Runnable" testcasecount="94" result="Failed" site="Child" start-time="2026-10-14 13:25:31Z" end-time="2026-10-14 13:25:32Z" duration="0.226725" total="3" passed="0" failed="3" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="39320" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="1114" name="CometFoundry" fullname="CometFoundry" runstate="Runnable" testcasecount="94" result="Failed" site="Child" start-time="2026-10-14 13:25:31Z" end-time="2026-10-14 13:25:32Z" duration="0.225754" total="3" passed="0" failed="3" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestSuite" id="1115" name="Tests" fullname="CometFoundry.Tests" runstate="Runnable" testcasecount="94" result="Failed" site="Child" start-time="2026-10-14 13:25:31Z" end-time="2026-10-14 13:25:32Z" duration="0.225088" total="3" passed="0" failed="3" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="TestFixture" id="1026" name="FoundryProductionTests" fullname="CometFoundry.Tests.FoundryProductionTests" classname="CometFoundry.Tests.FoundryProductionTests" runstate="Runnable" testcasecount="25" result="Failed" site="Child" start-time="2026-10-14 13:25:31Z" end-time="2026-10-14 13:25:32Z" duration="0.219578" total="3" passed="0" failed="3" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-case id="1045" name="DuplicateMines_BothResumeWhenStorageSpaceOnlyOpensIntermittently" fullname="CometFoundry.Tests.FoundryProductionTests.DuplicateMines_BothResumeWhenStorageSpaceOnlyOpensIntermittently" methodname="DuplicateMines_BothResumeWhenStorageSpaceOnlyOpensIntermittently" classname="CometFoundry.Tests.FoundryProductionTests" runstate="Runnable" seed="1002112922" result="Failed" start-time="2026-10-14 13:25:31Z" end-time="2026-10-14 13:25:31Z" duration="0.084447" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <failure>
+                <message><![CDATA[  The later-built mine must also drain output and resume, rather than stay full forever.
+  Expected: greater than 0.0d
+  But was:  0.0d
+]]></message>
+                <stack-trace><![CDATA[at CometFoundry.Tests.FoundryProductionTests.DuplicateMines_BothResumeWhenStorageSpaceOnlyOpensIntermittently () [0x0019f] in D:\Programming\Comet_Foundry\project_CF\ValidationArtifacts\ProductionStallReviewProject\Assets\CometFoundry\Tests\EditMode\FoundryProductionFairnessTests.cs:67
+]]></stack-trace>
+              </failure>
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1044" name="DuplicateProducers_AllReceiveScarceInputsAfterPriorityAgeSaturates" fullname="CometFoundry.Tests.FoundryProductionTests.DuplicateProducers_AllReceiveScarceInputsAfterPriorityAgeSaturates" classname="CometFoundry.Tests.FoundryProductionTests" runstate="Runnable" testcasecount="2" result="Failed" site="Child" start-time="2026-10-14 13:25:31Z" end-time="2026-10-14 13:25:32Z" duration="0.112748" total="2" passed="0" failed="2" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[One or more child tests had errors]]></message>
+              </failure>
+              <test-case id="1042" name="DuplicateProducers_AllReceiveScarceInputsAfterPriorityAgeSaturates(&quot;refinery-basic&quot;,&quot;smelt-iron&quot;,&quot;iron-ore&quot;,2)" fullname="CometFoundry.Tests.FoundryProductionTests.DuplicateProducers_AllReceiveScarceInputsAfterPriorityAgeSaturates(&quot;refinery-basic&quot;,&quot;smelt-iron&quot;,&quot;iron-ore&quot;,2)" methodname="DuplicateProducers_AllReceiveScarceInputsAfterPriorityAgeSaturates" classname="CometFoundry.Tests.FoundryProductionTests" runstate="Runnable" seed="610923681" result="Failed" start-time="2026-10-14 13:25:31Z" end-time="2026-10-14 13:25:32Z" duration="0.061083" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  facility-5 starved at 2 input stacks: 재료 대기: 철광석
+  Expected: greater than 0.0d
+  But was:  0.0d
+]]></message>
+                  <stack-trace><![CDATA[at CometFoundry.Tests.FoundryProductionTests.DuplicateProducers_AllReceiveScarceInputsAfterPriorityAgeSaturates (System.String building, System.String recipeId, System.String resourceId, System.Int32 initial) [0x001d7] in D:\Programming\Comet_Foundry\project_CF\ValidationArtifacts\ProductionStallReviewProject\Assets\CometFoundry\Tests\EditMode\FoundryProductionFairnessTests.cs:38
+]]></stack-trace>
+                </failure>
+              </test-case>
+              <test-case id="1043" name="DuplicateProducers_AllReceiveScarceInputsAfterPriorityAgeSaturates(&quot;factory-metal&quot;,&quot;make-frame&quot;,&quot;plate&quot;,1)" fullname="CometFoundry.Tests.FoundryProductionTests.DuplicateProducers_AllReceiveScarceInputsAfterPriorityAgeSaturates(&quot;factory-metal&quot;,&quot;make-frame&quot;,&quot;plate&quot;,1)" methodname="DuplicateProducers_AllReceiveScarceInputsAfterPriorityAgeSaturates" classname="CometFoundry.Tests.FoundryProductionTests" runstate="Runnable" seed="578084478" result="Failed" start-time="2026-10-14 13:25:32Z" end-time="2026-10-14 13:25:32Z" duration="0.047516" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  facility-5 starved at 1 input stacks: 재료 대기: 철판
+  Expected: greater than 0.0d
+  But was:  0.0d
+]]></message>
+                  <stack-trace><![CDATA[at CometFoundry.Tests.FoundryProductionTests.DuplicateProducers_AllReceiveScarceInputsAfterPriorityAgeSaturates (System.String building, System.String recipeId, System.String resourceId, System.Int32 initial) [0x001d7] in D:\Programming\Comet_Foundry\project_CF\ValidationArtifacts\ProductionStallReviewProject\Assets\CometFoundry\Tests\EditMode\FoundryProductionFairnessTests.cs:38
+]]></stack-trace>
+                </failure>
+                <output><![CDATA[Saving results to: C:/Users/user/AppData/LocalLow/DefaultCompany/project_CF\TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

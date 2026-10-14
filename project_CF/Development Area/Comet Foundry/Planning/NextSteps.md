@@ -1,5 +1,16 @@
 # 다음 작업
 
+## 2026-10-14 — 현재 플레이 모델 미사용 기능의 차후 개선
+
+사용자 지시에 따라 다음 테스트 실패 4개는 해당 기능 도입·개선 시 검토한다. 현재 플레이 모델의 우선 수정 대상에서 제외하며, 테스트를 삭제하거나 성공 처리하지 않는다.
+
+1. `MarketEventSystemTests.WarRumor_TemporarilyRaisesMilitaryGoodsOnly`: 115와 114.99999999999999의 부동소수점 비교. 허용 오차와 가격 반올림 정책 검토.
+2. `MarketSystemTests.TrustLevelThree_UsesBasePurchasePriceAndImprovedSalePrice`: 기대 800, 실제 880. 신뢰도 3의 가격 규칙과 테스트 기대값 대조.
+3. `MarketSystemTests.TrustLevelZero_UsesExpensivePurchasesAndLowSalePrice`: 기대 650, 실제 700. 신뢰도 0의 가격 규칙과 테스트 기대값 대조.
+4. `RequestSystemTests.Update_RefreshesEveryThirtySimulationMinutes`: 기대 의뢰 ID 0000, 실제 0003. 갱신 주기·생성 순서·기대값 검토.
+
+혜성 시드 테스트의 예외는 별도 분석 결과 생성 로직이 아니라 NUnit 문자 범위 검사에서 발생했다. [분석과 재현](../IssueHistory/SeedCodeRangeAssertion-2026-10-14.md). 문자 코드 정수 범위 검사로 수정한 후 해당 테스트의 후속 검증을 다시 실행하는 것이 다음 조치다.
+
 ## 2026-10-08 이후 우선순위
 
 1. `FoundryPlayableScene`을 실제 플레이하며 레시피와 물류 처리량 밸런스 조정.

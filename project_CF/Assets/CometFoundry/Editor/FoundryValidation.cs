@@ -120,7 +120,7 @@ public static class FoundryValidation
                 Require(!session.Power.HasDeficit, "starter power");
                 Require(session.Content.Recipes.Count == 16 && session.Content.Resources.Count == 16, "content count");
                 session.Advance(180);
-                Require(session.Comet.Facilities.Count == 4 && session.Sales == 0, "tutorial starter facilities");
+                Require(session.Comet.Facilities.Count == 5 && session.DroneWorkerCapacity == 4 && session.Sales == 0, "explicit starter drone provider");
                 Require(session.Comet.Deposits[0].RemainingStacks < 2400, "mining depletes deposit");
                 Require(session.TotalStock(session.Content.FindResource("copper-ore")) > 0, "starter copper mining");
                 // Safe completion when output storage grows (ice -> water increases stack count).

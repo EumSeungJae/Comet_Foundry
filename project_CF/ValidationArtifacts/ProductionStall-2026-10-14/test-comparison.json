@@ -1,0 +1,32 @@
+{
+    "beforeTotal":  94,
+    "beforePassed":  86,
+    "beforeFailed":  8,
+    "afterTotal":  97,
+    "afterPassed":  92,
+    "afterFailed":  5,
+    "relevantPassed":  51,
+    "newFailures":  0,
+    "preExistingFailures":  [
+                                {
+                                    "test":  "CometFoundry.Tests.CometGeneratorTests.Generate_CreatesEightCharacterStructuredSeedCode",
+                                    "message":  "System.ArgumentException : from must be less than to"
+                                },
+                                {
+                                    "test":  "CometFoundry.Tests.MarketEventSystemTests.WarRumor_TemporarilyRaisesMilitaryGoodsOnly",
+                                    "message":  "  Expected: 115.0d\n  But was:  114.99999999999999d\n"
+                                },
+                                {
+                                    "test":  "CometFoundry.Tests.MarketSystemTests.TrustLevelThree_UsesBasePurchasePriceAndImprovedSalePrice",
+                                    "message":  "  Expected: 800.0d\n  But was:  880.0d\n"
+                                },
+                                {
+                                    "test":  "CometFoundry.Tests.MarketSystemTests.TrustLevelZero_UsesExpensivePurchasesAndLowSalePrice",
+                                    "message":  "  Expected: 650.0d\n  But was:  700.0d\n"
+                                },
+                                {
+                                    "test":  "CometFoundry.Tests.RequestSystemTests.Update_RefreshesEveryThirtySimulationMinutes",
+                                    "message":  "  String lengths are both 21. Strings differ at index 20.\n  Expected: \"exchange-request-0000\"\n  But was:  \"exchange-request-0003\"\n  -------------------------------^\n"
+                                }
+                            ]
+}

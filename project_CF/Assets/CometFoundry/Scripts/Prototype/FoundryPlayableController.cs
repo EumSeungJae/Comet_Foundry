@@ -21,7 +21,7 @@ namespace CometFoundry.Prototype
         private float speed = 1;
         private Vector2 buildScroll;
         private Vector2 inventoryScroll, popupScroll;
-        private string notice = "발전소·기본 창고·채굴기 2개가 준비됐습니다. 상단 튜토리얼에서 채굴기 건설부터 차근차근 시작하세요.";
+        private string notice = "발전소·창고·드론저장소(4기)·채굴기 2개가 준비됐습니다. 상단 튜토리얼에서 시작하세요.";
         private bool confirmNew;
         private static readonly Color Ink = new Color32(229, 236, 230, 255);
         private static readonly Color Muted = new Color32(137, 159, 162, 255);
@@ -51,6 +51,8 @@ namespace CometFoundry.Prototype
             {
                 if (arguments[i] == "-foundryCapture") StartCoroutine(CaptureReview(arguments[i + 1]));
                 if (arguments[i] == "-foundryTutorialCapture") StartCoroutine(CaptureGuidedReview(arguments[i + 1]));
+                if (arguments[i] == "-foundryResolutionCapture") StartCoroutine(CaptureResolutionReview(arguments[i + 1]));
+                if (arguments[i] == "-foundryDroneCapture") StartCoroutine(CaptureDroneReview(arguments[i + 1]));
             }
         }
         private IEnumerator CaptureReview(string directory)
@@ -93,12 +95,24 @@ namespace CometFoundry.Prototype
                 ScreenCapture.CaptureScreenshotIntoRenderTexture(target);
                 RenderTexture.active = target;
                 capture.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
+                if (SystemInfo.graphicsUVStartsAtTop)
+                {
+                    var pixels = capture.GetPixels32();
+                    int width = capture.width, height = capture.height;
+                    for (int y = 0; y < height / 2; y++)
+                        for (int x = 0; x < width; x++)
+                        {
+                            int lower = y * width + x, upper = (height - 1 - y) * width + x;
+                            var pixel = pixels[lower]; pixels[lower] = pixels[upper]; pixels[upper] = pixel;
+                        }
+                    capture.SetPixels32(pixels);
+                }
                 capture.Apply(); File.WriteAllBytes(path, capture.EncodeToPNG());
             }
             finally { RenderTexture.active = previous; RenderTexture.ReleaseTemporary(target); Destroy(capture); }
 
         }
-        private void Update() { if (!showingTitle && !GameOverlayOpen && !TutorialPausesTime) session.Advance(Math.Min(Time.unscaledDeltaTime, 0.25f) * speed); if (!showingTitle) { CheckGuidedTutorial(); if (!tutorialGuide) CheckPracticePopup(); } }
+        private void Update() { if (resolutionReviewActive) return; if (!showingTitle && !GameOverlayOpen && !TutorialPausesTime) session.Advance(Math.Min(Time.unscaledDeltaTime, 0.25f) * speed); if (!showingTitle) { CheckGuidedTutorial(); if (!tutorialGuide) CheckPracticePopup(); } }
         private void OnDestroy()
         {
             if (priceChartTexture != null) Destroy(priceChartTexture);
@@ -170,7 +184,7 @@ namespace CometFoundry.Prototype
             {
                 showingTitle = true; hasActiveGame = true; selected = null; build = null; confirmNew = false; titleNotice = "";
             }
-            Label(new Rect(885, 65, 525, 21), $"{session.CalendarDate} · 개척 {1 + (int)session.Day}일차  ·  운송 {(session.Flight == null ? "대기" : "진행 중")}  ·  Space 일시정지", small);
+            Label(new Rect(885, 65, 525, 21), $"{session.CalendarDate} · {1 + (int)session.Day}일차 · 드론 {session.ActiveDroneCount}/{session.DroneWorkerCapacity}기 · Space 정지", small);
             Fill(new Rect(24, 109, 1392, 2), new Color32(51, 70, 79, 255));
             Label(new Rect(24, 123, 280, 27), "01  /  건설 계획", heading);
             Label(new Rect(340, 123, 768, 27), "02  /  혜성 개발 구역", heading);
@@ -230,16 +244,7 @@ namespace CometFoundry.Prototype
                 }
                 if (rect.width >= 80) Label(new Rect(rect.x + 7, rect.yMax - 26, rect.width - 14, 18), facility.ActiveRecipe?.Outputs[0].Resource.DisplayName ?? facility.Definition.DisplayName, Style(10, DarkText()));
             }
-            var flight = session.Flight;
-            if (flight != null)
-            {
-                Vector2 source = TileRect(flight.Source.Anchor, flight.Source.Definition.FootprintSize).center;
-                Vector2 destination = TileRect(flight.Destination.Anchor, flight.Destination.Definition.FootprintSize).center;
-                Vector2 position = Vector2.Lerp(source, destination, session.FlightProgress);
-                for (int i = 1; i < 15; i++)
-                { Vector2 dot = Vector2.Lerp(source, destination, i / 15f); Fill(new Rect(dot.x, dot.y, 2, 2), new Color32(255, 146, 62, 65)); }
-                Fill(new Rect(position.x - 5, position.y - 3, 10, 6), Ink); Fill(new Rect(position.x - 2, position.y - 2, 4, 4), Orange);
-            }
+            DrawActiveDrones();
             var e = Event.current;
             if (GameInputBlocked || selected != null || page != FoundryPage.Board || !MapRect.Contains(e.mousePosition)) return;
             Vector2Int hover = new Vector2Int(Mathf.FloorToInt((e.mousePosition.x - MapRect.x) / MapCell), session.Comet.Grid.Height - 1 - Mathf.FloorToInt((e.mousePosition.y - MapRect.y) / MapCell));
@@ -300,7 +305,8 @@ namespace CometFoundry.Prototype
             Fill(window, Panel); Fill(new Rect(250, 135, 940, 4), Orange);
             GUI.DrawTexture(new Rect(273, 158, 54, 54), art.Get(selected.Definition.FacilityType), ScaleMode.ScaleToFit);
             Label(new Rect(341, 159, 650, 34), selected.Definition.DisplayName, title);
-            Label(new Rect(342, 198, 600, 24), $"좌표 ({selected.Anchor.x}, {selected.Anchor.y})  /  {session.Status(selected)}  /  전력 {selected.Definition.BasePowerConsumption:0}", small);
+            Label(new Rect(342, 198, 810, 24), $"좌표 ({selected.Anchor.x}, {selected.Anchor.y}) / {session.Status(selected)} / 전력 {selected.Definition.BasePowerConsumption:0}" +
+                (selected.Definition.SupportedRecipes.Count > 0 ? $" / 드론 대기열 {session.DroneQueueCount(selected)}/2" : ""), small);
             if (Btn(new Rect(1000, 158, 85, 35), "철거")) { demolitionTarget = selected; return; }
             if (Btn(new Rect(1098, 158, 69, 35), "닫기")) { selected = null; return; }
             Fill(new Rect(273, 234, 894, 1), new Color32(54, 71, 80, 255));
@@ -348,9 +354,9 @@ namespace CometFoundry.Prototype
         }
         private void DrawStoragePopup()
         {
-            string help = selected.Definition.IsWarehouse ? "기본 창고의 지원 드론이 생산 재료와 재고를 자동 운반합니다. 시작 혜성에서는 임시 선착장도 지원합니다." : selected.Definition.IsPowerPlant ? "혜성 전체 시설에 전력을 공급합니다. 전력이 부족하면 생산과 운송이 일시 정지됩니다." : selected.Definition.IsDroneHangar ? "물류 드론 지원 시설입니다. 전력과 빈 통로가 필요합니다. 수용 드론 " + selected.Definition.DroneCapacity + "기 / 연결 " + selected.Definition.DroneLinkCapacity + "개. " + session.DroneStatus : "혜성 간 수송선이 도착해 화물을 하역합니다. 보관 공간이 부족하면 수송선에 화물을 보관하고 대기합니다.";
+            string help = selected.Definition.IsWarehouse ? "재고를 보관합니다. 자동 운반에는 별도의 드론저장소 또는 격납고가 필요합니다. 시작 창고는 임시 선착장도 지원합니다." : selected.Definition.IsPowerPlant ? "혜성 전체 시설에 전력을 공급합니다. 전력이 부족하면 생산과 운송이 일시 정지됩니다." : selected.Definition.IsDroneHangar ? $"이 시설의 드론 {selected.Definition.DroneCapacity}기가 재료 수집·운반·복귀를 병렬 수행합니다. 소형 저장소는 4기, 중형 격납고는 8기를 제공합니다. 생산 건물의 입출고 대기열은 합쳐서 최대 2개입니다. 전력과 연결된 빈 통로가 필요합니다." : "혜성 간 수송선이 도착해 화물을 하역합니다. 혜성 내부 운반에는 드론저장소 또는 격납고가 필요합니다. 보관 공간이 부족하면 수송선에 화물을 보관하고 대기합니다.";
             Label(new Rect(274, 251, 885, 65), help, text);
-            Label(new Rect(274, 325, 885, 30), selected.Definition.IsPowerPlant ? $"전력 생산 {selected.Definition.PowerOutput:0}" : selected.Definition.IsDroneHangar ? $"드론 수용 {selected.Definition.DroneCapacity}기 · 연결 {selected.Definition.DroneLinkCapacity}개" : $"보관량 {selected.Inventory.UsedStacks:0.#} / {selected.Inventory.CapacityStacks:0} 스택", heading);
+            Label(new Rect(274, 325, 885, 30), selected.Definition.IsPowerPlant ? $"전력 생산 {selected.Definition.PowerOutput:0}" : selected.Definition.IsDroneHangar ? $"이 시설 작업 {session.ProviderActiveDrones(selected)}/{selected.Definition.DroneCapacity}기 · 혜성 전체 {session.ActiveDroneCount}/{session.DroneWorkerCapacity}기" : $"보관량 {selected.Inventory.UsedStacks:0.#} / {selected.Inventory.CapacityStacks:0} 스택", heading);
             popupScroll = GUI.BeginScrollView(new Rect(274, 377, 888, 333), popupScroll, new Rect(0, 0, 857, Math.Max(300, selected.Inventory.Amounts.Count * 39)));
             float y = 0;
             foreach (var amount in selected.Inventory.Amounts)
@@ -367,7 +373,12 @@ namespace CometFoundry.Prototype
         {
             Color old = GUI.color; GUI.color = color; GUI.DrawTexture(rect, Texture2D.whiteTexture); GUI.color = old;
         }
-        private static void Label(Rect rect, string value, GUIStyle style) => GUI.Label(rect, value, style);
+        private void Label(Rect rect, string value, GUIStyle style)
+        {
+            if (resolutionReviewActive && Event.current.type == EventType.Repaint)
+                ReviewTextFit(rect, value, style);
+            GUI.Label(rect, value, style);
+        }
         private bool Btn(Rect rect, string value, bool accent = false)
         {
             Color old = GUI.backgroundColor; GUI.backgroundColor = accent ? Orange : new Color32(63, 82, 90, 255);

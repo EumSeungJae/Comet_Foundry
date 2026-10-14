@@ -17,25 +17,23 @@ namespace CometFoundry.Simulation
         public double Sales { get; private set; }
         public int EquipmentDelivered { get; private set; }
         public bool AutoSell { get; set; }
-        public DroneHaulRequest Flight { get => colonies[activeColony].Flight; private set => colonies[activeColony].Flight = value; }
-        public float FlightProgress => flightDuration > 0 ? (float)(flightElapsed / flightDuration) : 0;
+        public DroneHaulRequest Flight => DroneFlights.Count > 0 ? DroneFlights[0].Request : null;
+        public float FlightProgress => DroneFlights.Count > 0 ? DroneFlights[0].Progress : 0;
         public PowerReport Power
         {
             get
             {
                 var report = powerSystem.Calculate(Comet);
-                return new PowerReport(report.GeneratedPower, report.ConsumedPower + (HasLogistics ? (HasHangar ? 2 : 1) : 0));
+                return new PowerReport(report.GeneratedPower, report.ConsumedPower + PowerSystem.GetDronePowerConsumption(DroneWorkerCapacity));
             }
         }
         public bool HasHangar => FindType(FacilityType.DroneHangar) != null;
-        public bool HasLogistics => HasHangar || FindType(FacilityType.Warehouse) != null || FindType(FacilityType.LogisticsHub) != null;
+        public bool HasLogistics => DroneWorkerCapacity > 0;
         private readonly PlacementSystem placement = new PlacementSystem();
         private readonly PowerSystem powerSystem = new PowerSystem();
         private readonly DroneLogisticsSystem logistics = new DroneLogisticsSystem();
         private readonly DroneWorkPlanner planner = new DroneWorkPlanner();
         private Dictionary<FacilityInstance, double> lastSupply => colonies[activeColony].LastSupply;
-        private double flightElapsed { get => colonies[activeColony].FlightElapsed; set => colonies[activeColony].FlightElapsed = value; }
-        private double flightDuration { get => colonies[activeColony].FlightDuration; set => colonies[activeColony].FlightDuration = value; }
         private double pending, saleTimer;
         private int nextId;
         // Runtime observations for guided production; purchases never count as production.
@@ -53,7 +51,7 @@ namespace CometFoundry.Simulation
             Company.AddComet(Comet);
             Seconds = Sales = pending = saleTimer = 0;
             EquipmentDelivered = nextId = 0;
-            Flight = null; lastSupply.Clear(); AutoSell = false;
+            lastSupply.Clear(); AutoSell = false;
             // Fixed starter comet, with open corridors around every starter building.
             for (int x = 0; x < Width; x++)
                 for (int y = 0; y < Height; y++)
@@ -61,7 +59,8 @@ namespace CometFoundry.Simulation
             AddDeposit("iron-ore", 2, 3); AddDeposit("copper-ore", 2, 7); AddDeposit("ice", 3, 9);
             AddDeposit("iron-ore", 11, 9); AddDeposit("copper-ore", 13, 4); AddDeposit("ice", 6, 1);
             Starter("power-plant-large", 12, 0);
-            var warehouse = Starter("warehouse-small", 7, 7);
+            Starter("warehouse-small", 7, 7);
+            Starter("drone-storage", 6, 8);
             Starter("mine-small", 2, 3, "extract-iron");
             Starter("mine-small", 2, 7, "extract-copper");
             ResetExpansion();
@@ -108,6 +107,7 @@ namespace CometFoundry.Simulation
             if (message != null) return false;
             if (!placement.TryPlaceFacility(Comet, new SimulationId("facility-" + nextId++), definition, tile, out var facility)) return false;
             Company.Spend(definition.BuildCost);
+            InvalidateDroneNavigation();
             if (definition.FacilityType == FacilityType.Mine)
                 foreach (var recipe in definition.SupportedRecipes)
                     if (recipe.Outputs[0].Resource == DepositAt(tile).Resource) facility.AssignRecipe(recipe);
@@ -169,63 +169,6 @@ namespace CometFoundry.Simulation
                 saleTimer += 0.1d;
                 if (saleTimer >= 1d) { saleTimer -= 1d; SellTerminalStock(); }
                 RecordBalance(); RefreshTutorial();
-            }
-        }
-        private void TickDrones(double seconds)
-        {
-            if (!HasLogistics) return;
-            if (Flight != null)
-            {
-                flightElapsed += seconds;
-                if (flightElapsed < flightDuration) return;
-                double quantity = Math.Min(Flight.RequestedStacks, Math.Min(Flight.Source.Inventory.GetAmount(Flight.Resource), Flight.Destination.Inventory.FreeStacks));
-                Flight.Source.Inventory.RemoveStacks(Flight.Resource, quantity);
-                Flight.Destination.Inventory.AddStacks(Flight.Resource, quantity);
-                Flight = null;
-            }
-            var requests = new List<DroneHaulRequest>();
-            foreach (var destination in Comet.Facilities)
-            {
-                if (destination.ActiveRecipe != null)
-                    foreach (var input in destination.ActiveRecipe.Inputs)
-                    {
-                        double wanted = input.Stacks * 3 - destination.Inventory.GetAmount(input.Resource);
-                        if (wanted > 0) AddRequests(requests, destination, input.Resource, wanted, DroneHaulRequestType.ProductionInput);
-                    }
-                if (destination.Definition.FacilityType == FacilityType.MarketTerminal && AutoSell)
-                    foreach (var resource in Content.Resources)
-                        if (resource.ProcessingGrade == 5) AddRequests(requests, destination, resource, 4, DroneHaulRequestType.MarketReservation);
-                if (destination.Definition.IsWarehouse)
-                    foreach (var resource in Content.Resources) AddRequests(requests, destination, resource, 4, DroneHaulRequestType.Storage);
-            }
-            Flight = planner.SelectNextRequest(requests);
-            if (Flight == null) return;
-            lastSupply[Flight.Destination] = Seconds;
-            flightElapsed = 0;
-            flightDuration = (0.6d + Vector2Int.Distance(Flight.Source.Anchor, Flight.Destination.Anchor) * 0.045d)
-                / logistics.GetPathSpeedMultiplier(Comet, Flight.Source, Flight.Destination);
-        }
-        private void AddRequests(List<DroneHaulRequest> requests, FacilityInstance destination, ResourceDefinition resource, double wanted, DroneHaulRequestType type)
-        {
-            if (destination.Inventory.FreeStacks <= 0) return;
-            foreach (var source in Comet.Facilities)
-            {
-                if (source == destination) continue;
-                if (type == DroneHaulRequestType.Storage && source.Definition.IsWarehouse) continue;
-                double reserve = 0;
-                if (source.ActiveRecipe != null)
-                    foreach (var input in source.ActiveRecipe.Inputs) if (input.Resource == resource) reserve += input.Stacks * 3;
-                double quantity = Math.Min(4, Math.Min(wanted, Math.Min(source.Inventory.GetAmount(resource) - reserve, destination.Inventory.FreeStacks)));
-                if (quantity <= 0.0001d || !logistics.HasNavigablePath(Comet, source, destination)) continue;
-                // Empty production inputs outrank buffer top-ups; waiting destinations get a bounded age bonus.
-                // Keep the bonus below 10 so it cannot override the planner's production/market/storage tiers.
-                bool urgent = false;
-                if (destination.ActiveRecipe != null)
-                    foreach (var input in destination.ActiveRecipe.Inputs)
-                        if (input.Resource == resource && destination.Inventory.GetAmount(resource) < input.Stacks) urgent = true;
-                lastSupply.TryGetValue(destination, out double last);
-                int priority = (urgent ? 5 : 0) + (int)Math.Min(4, Math.Max(0, Seconds - last) / 3);
-                requests.Add(new DroneHaulRequest(type, source, destination, resource, quantity, priority));
             }
         }
         private void SellTerminalStock()
@@ -299,7 +242,7 @@ namespace CometFoundry.Simulation
             Company = new CompanyState(save.credits); colonies.Clear(); colonies.Add(new FoundryColony(candidate, "헤스티아")); activeColony = 0; Company.AddComet(candidate);
             ResetExpansion(); TutorialStep = FoundryTutorialStep.Complete;
             Seconds = Math.Max(0, save.seconds) / 300d * RealSecondsPerDay; Sales = Math.Max(0, save.sales); EquipmentDelivered = Math.Max(0, save.delivered);
-            AutoSell = save.autoSell; nextId = id; Flight = null; lastSupply.Clear(); pending = saleTimer = 0; return true;
+            AutoSell = save.autoSell; nextId = id; lastSupply.Clear(); pending = saleTimer = 0; return true;
         }
         public void Dispose() => Content.Dispose();
     }

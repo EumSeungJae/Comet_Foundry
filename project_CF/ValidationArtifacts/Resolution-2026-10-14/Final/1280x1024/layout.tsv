@@ -1,0 +1,64 @@
+scene	actual-resolution	scale	small-text-pixels	guide-geometry
+01-title	1280x1024	0.889	10.67	-
+02-tutorial-choice	1280x1024	0.889	10.67	-
+03-board	1280x1024	0.889	10.67	-
+04-production	1280x1024	0.889	10.67	-
+05-exchange-6months	1280x1024	0.889	10.67	-
+06-exchange-24months	1280x1024	0.889	10.67	-
+07-missions-top	1280x1024	0.889	10.67	-
+08-missions-bottom	1280x1024	0.889	10.67	-
+09-mission-five-materials	1280x1024	0.889	10.67	-
+09-mission-reward-10	1280x1024	0.889	10.67	-
+09-mission-reward-11	1280x1024	0.889	10.67	-
+10-exploration	1280x1024	0.889	10.67	-
+11-fleet	1280x1024	0.889	10.67	-
+12-demolition	1280x1024	0.889	10.67	-
+guide-01-SelectBuilding	1280x1024	0.889	10.67	PASS target=(x:35.56, y:297.78, width:220.44, height:47.11) popup=(x:832.00, y:218.67, width:426.67, height:302.22)
+guide-02-PlaceBuilding	1280x1024	0.889	10.67	PASS target=(x:771.56, y:378.67, width:42.67, height:42.67) popup=(x:832.00, y:218.67, width:426.67, height:302.22)
+guide-04-SelectRecipe	1280x1024	0.889	10.67	PASS target=(x:243.56, y:367.11, width:225.78, height:48.89) popup=(x:21.33, y:515.56, width:426.67, height:302.22)
+guide-05-ConfirmRecipe	1280x1024	0.889	10.67	PASS target=(x:495.11, y:724.44, width:328.89, height:41.78) popup=(x:21.33, y:515.56, width:426.67, height:302.22)
+guide-07-SelectBuilding	1280x1024	0.889	10.67	PASS target=(x:35.56, y:345.78, width:220.44, height:47.11) popup=(x:832.00, y:218.67, width:426.67, height:302.22)
+guide-08-PlaceBuilding	1280x1024	0.889	10.67	PASS target=(x:643.56, y:720.00, width:42.67, height:85.33) popup=(x:832.00, y:218.67, width:426.67, height:302.22)
+guide-10-SelectRecipe	1280x1024	0.889	10.67	PASS target=(x:243.56, y:367.11, width:225.78, height:48.89) popup=(x:21.33, y:515.56, width:426.67, height:302.22)
+guide-11-ConfirmRecipe	1280x1024	0.889	10.67	PASS target=(x:495.11, y:724.44, width:328.89, height:41.78) popup=(x:21.33, y:515.56, width:426.67, height:302.22)
+guide-13-SelectBuilding	1280x1024	0.889	10.67	PASS target=(x:35.56, y:393.78, width:220.44, height:47.11) popup=(x:832.00, y:218.67, width:426.67, height:302.22)
+guide-14-PlaceBuilding	1280x1024	0.889	10.67	PASS target=(x:643.56, y:720.00, width:85.33, height:85.33) popup=(x:832.00, y:218.67, width:426.67, height:302.22)
+guide-16-SelectRecipe	1280x1024	0.889	10.67	PASS target=(x:243.56, y:367.11, width:225.78, height:48.89) popup=(x:21.33, y:515.56, width:426.67, height:302.22)
+guide-17-ConfirmRecipe	1280x1024	0.889	10.67	PASS target=(x:495.11, y:724.44, width:328.89, height:41.78) popup=(x:21.33, y:515.56, width:426.67, height:302.22)
+guide-19-OpenFacility	1280x1024	0.889	10.67	PASS target=(x:387.56, y:720.00, width:42.67, height:85.33) popup=(x:832.00, y:218.67, width:426.67, height:302.22)
+guide-20-SelectRecipe	1280x1024	0.889	10.67	PASS target=(x:243.56, y:424.00, width:225.78, height:48.89) popup=(x:21.33, y:515.56, width:426.67, height:302.22)
+guide-21-ConfirmRecipe	1280x1024	0.889	10.67	PASS target=(x:495.11, y:724.44, width:328.89, height:41.78) popup=(x:21.33, y:515.56, width:426.67, height:302.22)
+guide-23-SelectBuilding	1280x1024	0.889	10.67	PASS target=(x:35.56, y:404.44, width:220.44, height:47.11) popup=(x:832.00, y:218.67, width:426.67, height:302.22)
+guide-24-PlaceBuilding	1280x1024	0.889	10.67	PASS target=(x:643.56, y:677.33, width:85.33, height:128.00) popup=(x:832.00, y:218.67, width:426.67, height:302.22)
+guide-26-SelectRecipe	1280x1024	0.889	10.67	PASS target=(x:243.56, y:367.11, width:225.78, height:48.89) popup=(x:21.33, y:515.56, width:426.67, height:302.22)
+guide-27-ConfirmRecipe	1280x1024	0.889	10.67	PASS target=(x:495.11, y:724.44, width:328.89, height:41.78) popup=(x:21.33, y:515.56, width:426.67, height:302.22)
+guide-30-SelectRecipe	1280x1024	0.889	10.67	PASS target=(x:243.56, y:424.00, width:225.78, height:48.89) popup=(x:21.33, y:515.56, width:426.67, height:302.22)
+guide-31-ConfirmRecipe	1280x1024	0.889	10.67	PASS target=(x:495.11, y:724.44, width:328.89, height:41.78) popup=(x:21.33, y:515.56, width:426.67, height:302.22)
+guide-34-SelectRecipe	1280x1024	0.889	10.67	PASS target=(x:243.56, y:367.11, width:225.78, height:48.89) popup=(x:21.33, y:515.56, width:426.67, height:302.22)
+guide-35-ConfirmRecipe	1280x1024	0.889	10.67	PASS target=(x:495.11, y:724.44, width:328.89, height:41.78) popup=(x:21.33, y:515.56, width:426.67, height:302.22)
+guide-37-SelectBuilding	1280x1024	0.889	10.67	PASS target=(x:35.56, y:404.44, width:220.44, height:47.11) popup=(x:832.00, y:218.67, width:426.67, height:302.22)
+guide-38-PlaceBuilding	1280x1024	0.889	10.67	PASS target=(x:472.89, y:592.00, width:85.33, height:85.33) popup=(x:832.00, y:218.67, width:426.67, height:302.22)
+guide-40-SelectRecipe	1280x1024	0.889	10.67	PASS target=(x:243.56, y:424.00, width:225.78, height:48.89) popup=(x:21.33, y:515.56, width:426.67, height:302.22)
+guide-41-ConfirmRecipe	1280x1024	0.889	10.67	PASS target=(x:495.11, y:724.44, width:328.89, height:41.78) popup=(x:21.33, y:515.56, width:426.67, height:302.22)
+guide-44-Read	1280x1024	0.889	10.67	PASS target=(x:600.89, y:421.33, width:42.67, height:85.33) popup=(x:832.00, y:218.67, width:426.67, height:302.22)
+guide-46-Read	1280x1024	0.889	10.67	PASS target=(x:35.56, y:626.67, width:220.44, height:47.11) popup=(x:832.00, y:218.67, width:426.67, height:302.22)
+guide-48-SelectBuilding	1280x1024	0.889	10.67	PASS target=(x:35.56, y:482.67, width:220.44, height:47.11) popup=(x:832.00, y:218.67, width:426.67, height:302.22)
+guide-49-PlaceBuilding	1280x1024	0.889	10.67	PASS target=(x:942.22, y:634.67, width:42.67, height:85.33) popup=(x:832.00, y:218.67, width:426.67, height:302.22)
+guide-50-OpenExchange	1280x1024	0.889	10.67	PASS target=(x:1022.22, y:746.67, width:218.67, height:29.33) popup=(x:832.00, y:218.67, width:426.67, height:302.22)
+guide-52-Read	1280x1024	0.889	10.67	PASS target=(x:311.11, y:314.67, width:663.11, height:390.22) popup=(x:21.33, y:257.78, width:259.56, height:373.33)
+guide-55-OpenMissions	1280x1024	0.889	10.67	PASS target=(x:1022.22, y:445.33, width:218.67, height:25.78) popup=(x:21.33, y:218.67, width:426.67, height:302.22)
+guide-56-AcceptMission	1280x1024	0.889	10.67	PASS target=(x:867.56, y:338.67, width:122.67, height:40.89) popup=(x:21.33, y:218.67, width:426.67, height:302.22)
+guide-60-OpenManagement	1280x1024	0.889	10.67	PASS target=(x:1022.22, y:780.44, width:218.67, height:29.33) popup=(x:832.00, y:218.67, width:426.67, height:302.22)
+guide-62-Read	1280x1024	0.889	10.67	PASS target=(x:37.33, y:569.78, width:605.33, height:229.33) popup=(x:832.00, y:218.67, width:426.67, height:302.22)
+guide-63-Read	1280x1024	0.889	10.67	PASS target=(x:691.56, y:270.22, width:549.33, height:512.00) popup=(x:21.33, y:218.67, width:426.67, height:302.22)
+guide-64-Read	1280x1024	0.889	10.67	PASS target=(x:691.56, y:270.22, width:549.33, height:512.00) popup=(x:21.33, y:218.67, width:426.67, height:302.22)
+guide-65-Survey	1280x1024	0.889	10.67	PASS target=(x:693.33, y:376.00, width:542.22, height:35.56) popup=(x:21.33, y:218.67, width:426.67, height:302.22)
+guide-69-SwitchDestination	1280x1024	0.889	10.67	PASS target=(x:35.56, y:389.33, width:581.33, height:78.22) popup=(x:832.00, y:218.67, width:426.67, height:302.22)
+guide-72-PrepareCargo	1280x1024	0.889	10.67	PASS target=(x:1006.22, y:257.78, width:252.44, height:560.00) popup=(x:21.33, y:218.67, width:426.67, height:302.22)
+guide-74-SelectSource	1280x1024	0.889	10.67	PASS target=(x:813.33, y:371.56, width:422.22, height:28.44) popup=(x:21.33, y:218.67, width:426.67, height:302.22)
+guide-75-SelectDestination	1280x1024	0.889	10.67	PASS target=(x:813.33, y:411.56, width:422.22, height:28.44) popup=(x:21.33, y:218.67, width:426.67, height:302.22)
+guide-76-SelectCargo	1280x1024	0.889	10.67	PASS target=(x:693.33, y:451.56, width:542.22, height:109.33) popup=(x:21.33, y:218.67, width:426.67, height:302.22)
+guide-77-DispatchCargo	1280x1024	0.889	10.67	PASS target=(x:693.33, y:684.44, width:542.22, height:39.11) popup=(x:832.00, y:218.67, width:426.67, height:302.22)
+guide-78-WaitCargo	1280x1024	0.889	10.67	PASS target=(x:813.33, y:324.44, width:422.22, height:28.44) popup=(x:21.33, y:218.67, width:426.67, height:302.22)
+guide-80-OpenCargoDock	1280x1024	0.889	10.67	PASS target=(x:489.96, y:344.53, width:102.40, height:153.60) popup=(x:832.00, y:218.67, width:426.67, height:302.22)
+guide-81-Read	1280x1024	0.889	10.67	PASS target=(x:243.56, y:447.11, width:789.33, height:44.44) popup=(x:21.33, y:515.56, width:426.67, height:302.22)

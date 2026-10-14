@@ -1,0 +1,19 @@
+{
+  "actualResolutions": [
+    "1024x768",
+    "1280x720",
+    "1366x768",
+    "1280x1024",
+    "1920x1080"
+  ],
+  "requestedButNotRendered": [
+    "2560x1440",
+    "3440x1440"
+  ],
+  "framesPerRun": 63,
+  "pngCount": 441,
+  "pngSizesValid": true,
+  "sourceMatches": true,
+  "unitTestsPassed": 43,
+  "representativeScreensReviewed": true
+}
