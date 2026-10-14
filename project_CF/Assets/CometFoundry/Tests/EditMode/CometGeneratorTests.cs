@@ -20,12 +20,12 @@ namespace CometFoundry.Tests
             Assert.AreEqual(9, CometGenerator.GetGridSize(CometGrade.F));
 
             Assert.AreEqual(1f, CometGenerator.GetBuildableRatio(CometGrade.S));
-            Assert.AreEqual(0.98f, CometGenerator.GetBuildableRatio(CometGrade.A));
-            Assert.AreEqual(0.96f, CometGenerator.GetBuildableRatio(CometGrade.B));
-            Assert.AreEqual(0.94f, CometGenerator.GetBuildableRatio(CometGrade.C));
-            Assert.AreEqual(0.92f, CometGenerator.GetBuildableRatio(CometGrade.D));
-            Assert.AreEqual(0.90f, CometGenerator.GetBuildableRatio(CometGrade.E));
-            Assert.AreEqual(0.88f, CometGenerator.GetBuildableRatio(CometGrade.F));
+            Assert.AreEqual(0.96f, CometGenerator.GetBuildableRatio(CometGrade.A));
+            Assert.AreEqual(0.93f, CometGenerator.GetBuildableRatio(CometGrade.B));
+            Assert.AreEqual(0.90f, CometGenerator.GetBuildableRatio(CometGrade.C));
+            Assert.AreEqual(0.87f, CometGenerator.GetBuildableRatio(CometGrade.D));
+            Assert.AreEqual(0.84f, CometGenerator.GetBuildableRatio(CometGrade.E));
+            Assert.AreEqual(0.80f, CometGenerator.GetBuildableRatio(CometGrade.F));
         }
 
         [TestCase(CometGrade.S)]
@@ -45,8 +45,23 @@ namespace CometFoundry.Tests
                 pattern.Invoke(new CometGenerator(seed), new object[] { grid, ratio });
                 int expected = Mathf.RoundToInt(size * size * ratio);
                 Assert.AreEqual(expected, CountBuildableTiles(grid), $"{grade}/{size}/{seed}");
-                for (int y = 1; y < size - 1; y++) for (int x = 1; x < size - 1; x++)
-                    Assert.IsTrue(grid.GetTile(new Vector2Int(x,y)).IsDroneNavigable, "Interior must remain open");
+                int interiorDamage = 0, rimDamage = 0;
+                for (int y = 0; y < size; y++) for (int x = 0; x < size; x++)
+                {
+                    if (x == size / 2 || y == size / 2)
+                        Assert.IsTrue(grid.GetTile(new Vector2Int(x,y)).IsDroneNavigable, "Central corridors must remain open");
+                    if (grid.GetTile(new Vector2Int(x,y)).Terrain != CometTileTerrain.Void) continue;
+                    if (x == 0 || y == 0 || x == size - 1 || y == size - 1) rimDamage++;
+                    else
+                    {
+                        interiorDamage++;
+                        for (int dy = -1; dy <= 1; dy++) for (int dx = -1; dx <= 1; dx++)
+                            if (dx != 0 || dy != 0) Assert.AreNotEqual(CometTileTerrain.Void, grid.GetTile(new Vector2Int(x+dx,y+dy)).Terrain, "Interior holes must remain isolated");
+                    }
+                }
+                int damaged = size * size - expected;
+                Assert.AreEqual(damaged == 0 ? 0 : Mathf.Max(1, Mathf.RoundToInt(damaged * .2f)), interiorDamage);
+                if (damaged > 0) Assert.Greater(rimDamage, interiorDamage, "Most damage must be on the rim");
                 var visited = new HashSet<Vector2Int>(); var pending = new Queue<Vector2Int>();
                 pending.Enqueue(new Vector2Int(1,1)); visited.Add(new Vector2Int(1,1));
                 while (pending.Count > 0)

@@ -136,17 +136,17 @@ namespace CometFoundry.Simulation
                 case CometGrade.S:
                     return 1f;
                 case CometGrade.A:
-                    return 0.98f;
-                case CometGrade.B:
                     return 0.96f;
+                case CometGrade.B:
+                    return 0.93f;
                 case CometGrade.C:
-                    return 0.94f;
-                case CometGrade.D:
-                    return 0.92f;
-                case CometGrade.E:
                     return 0.90f;
+                case CometGrade.D:
+                    return 0.87f;
+                case CometGrade.E:
+                    return 0.84f;
                 default:
-                    return 0.88f;
+                    return 0.80f;
             }
         }
 
@@ -288,24 +288,48 @@ namespace CometFoundry.Simulation
             int targetBuildableTiles = Mathf.RoundToInt(tileCount * Mathf.Clamp01(buildableRatio));
             int inactiveTiles = Mathf.Max(0, tileCount - targetBuildableTiles);
 
-            // Damage the outer rim, preserving an uninterrupted interior for construction and logistics.
+            // Keep a connected central backbone; most damage belongs on the rim.
             var rim = new List<Vector2Int>();
+            var interior = new List<Vector2Int>();
             for (int y = 0; y < grid.Height; y++) for (int x = 0; x < grid.Width; x++)
-                if (x == 0 || y == 0 || x == grid.Width - 1 || y == grid.Height - 1) rim.Add(new Vector2Int(x, y));
-            for (int i = rim.Count - 1; i > 0; i--)
             {
-                int pick = random.Next(i + 1);
-                var swap = rim[i]; rim[i] = rim[pick]; rim[pick] = swap;
+                if (x == grid.Width / 2 || y == grid.Height / 2) continue;
+                if (x == 0 || y == 0 || x == grid.Width - 1 || y == grid.Height - 1) rim.Add(new Vector2Int(x, y));
+                else if (x >= 2 && y >= 2 && x < grid.Width - 2 && y < grid.Height - 2) interior.Add(new Vector2Int(x, y));
             }
+            ShuffleDamageCandidates(interior); ShuffleDamageCandidates(rim);
             int removed = 0;
+            int innerBudget = inactiveTiles == 0 ? 0 : Mathf.Max(1, Mathf.RoundToInt(inactiveTiles * .2f));
+            foreach (var coordinate in interior)
+            {
+                if (removed >= innerBudget) break;
+                bool nearDamage = false;
+                for (int dy = -1; dy <= 1; dy++) for (int dx = -1; dx <= 1; dx++)
+                    if (grid.GetTile(coordinate + new Vector2Int(dx, dy))?.Terrain == CometTileTerrain.Void) nearDamage = true;
+                if (!nearDamage && TryDamageTile(grid, coordinate, tileCount - removed - 1)) removed++;
+            }
             foreach (var coordinate in rim)
             {
                 if (removed >= inactiveTiles) break;
-                var previous = grid.GetTile(coordinate).Terrain;
-                grid.GetTile(coordinate).SetTerrain(CometTileTerrain.Void);
-                if (ActiveTilesConnected(grid, tileCount - removed - 1)) removed++;
-                else grid.GetTile(coordinate).SetTerrain(previous);
+                if (TryDamageTile(grid, coordinate, tileCount - removed - 1)) removed++;
             }
+        }
+
+        private void ShuffleDamageCandidates(List<Vector2Int> candidates)
+        {
+            for (int i = candidates.Count - 1; i > 0; i--)
+            {
+                int pick = random.Next(i + 1);
+                var swap = candidates[i]; candidates[i] = candidates[pick]; candidates[pick] = swap;
+            }
+        }
+
+        private static bool TryDamageTile(CometGrid grid, Vector2Int coordinate, int remaining)
+        {
+            var previous = grid.GetTile(coordinate).Terrain;
+            grid.GetTile(coordinate).SetTerrain(CometTileTerrain.Void);
+            if (ActiveTilesConnected(grid, remaining)) return true;
+            grid.GetTile(coordinate).SetTerrain(previous); return false;
         }
 
         private static bool ActiveTilesConnected(CometGrid grid, int expected)
