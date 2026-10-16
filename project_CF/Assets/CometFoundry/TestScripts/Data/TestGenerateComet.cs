@@ -1,11 +1,11 @@
 using UnityEngine;
 
 
-public class GenerateComet : MonoBehaviour
+public class TestGenerateComet : MonoBehaviour
 {
-    public CometData TestGenerateComet()
+    public TestCometData TestCreateComet()
     {
-        CometData comet = new CometData();
+        TestCometData comet = new TestCometData();
 
         comet.cometID = Random.Range(1000, 9999);
         comet.cometName = "Comet-" + comet.cometID;

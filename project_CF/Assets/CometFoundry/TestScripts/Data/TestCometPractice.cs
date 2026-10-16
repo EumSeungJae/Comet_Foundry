@@ -1,11 +1,11 @@
 using UnityEngine;
 
-public class CometPractice : MonoBehaviour
+public class TestCometPractice : MonoBehaviour
 {
      // Çý¼ºÀÇ °´Ã¼¸¦ ¸¸µå´Â ÄÚµå
     void Start()
     {
-        CometData comet = new CometData();
+        TestCometData comet = new TestCometData();
 
         comet.cometID = 1001;
         comet.cometName = "Comet - 001";
@@ -27,7 +27,7 @@ public class CometPractice : MonoBehaviour
          */
     }
 
-    void PrintCometInfo(CometData comet)
+    void PrintCometInfo(TestCometData comet)
     {
         Debug.Log("Çý¼º ÀÌ¸§ : " + comet.cometName);
         Debug.Log("Çý¼º µî±Þ : " + comet.cometGrade);

@@ -1,8 +1,12 @@
 using System;
 using UnityEngine;
 
+using System.Collections.Generic;
+
+
+
 [Serializable]
-public class CometData
+public class TestCometData
 {
     // 혜성 기본 스테이터스
     public int cometID;
