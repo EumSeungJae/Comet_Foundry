@@ -13,7 +13,7 @@ public class TestCometPractice : MonoBehaviour
 
         comet.ironAmount = 500;
         comet.copperAmount = 300;
-        comet.IceAmount = 100;
+        comet.iceAmount = 100;
 
         PrintCometInfo(comet);
 
