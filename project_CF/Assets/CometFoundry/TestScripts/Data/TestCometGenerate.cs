@@ -5,7 +5,12 @@ using UnityEditor;
 
 public class TestCometGenerate : MonoBehaviour
 {
-    
+    void Start()
+    {
+        TestPlayerData testPlayerData = new TestPlayerData();
+    }
+
+
     public List<TestCometData> CreateCometData()
     {
         List<TestCometData> comets = new List<TestCometData>();
@@ -109,6 +114,30 @@ public class TestCometGenerate : MonoBehaviour
         
     }
 
+    public void selectDeleteCometData(TestPlayerData player, int selectedIndex)
+    {
+        // 삭제할 인덱스 검사
+        // 생성된 혜성이 아니라 이미 있는 혜성들을 가져오기에
+        // 함수의 매개변수 List<TestCometData>comets 삭제 후
+        // 플레이어 데이터에서 직접 호출
+
+        if (selectedIndex < 0 || selectedIndex >= player.userComet.Count)
+        {
+            Debug.LogError("잘못된 혜성 선택");
+            return;
+        }
+
+        Debug.Log("혜성 이름 - " + player.userComet[selectedIndex].cometName + "가 삭제되었습니다.");
+        
+        // 유저의 보유혜성중 선택된 혜성 삭제.
+
+        // Remove   특정 객체를 찾아서 삭제
+        // RemoveAt 지정 인덱스에 있는 객체 삭제
+
+        // 즉 배열자체, 단일객체를 삭제시 Remove, 배열 내부에 있는 내부 객체는 RemoveAt
+        player.userComet.RemoveAt(selectedIndex);
+
+    }
 
 
 }

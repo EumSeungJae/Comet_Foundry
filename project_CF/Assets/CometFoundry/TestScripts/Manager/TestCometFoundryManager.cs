@@ -50,10 +50,10 @@ public class TestCometFoundryManager : MonoBehaviour
         }
 
         // 혜성 다중생성
-        List<TestCometData> candidates = cometGenerate.CreateCometData();
+        List<TestCometData> cometIndex = cometGenerate.CreateCometData();
 
         // 테스트 혜성 중 두번째 혜성 선택
-        cometGenerate.selectSaveCometData(testPlayer, candidates, 1);
+        cometGenerate.selectSaveCometData(testPlayer, cometIndex, 1);
 
 
         // 시작시 저장된 혜성을 보유 혜성 목록에서 데이터를 출력하는 실험.
@@ -67,6 +67,9 @@ public class TestCometFoundryManager : MonoBehaviour
         Debug.Log("철 자원- " + testPlayer.userComet[1].ironAmount);
         Debug.Log("구리 자원- " + testPlayer.userComet[1].copperAmount);
         Debug.Log("얼음 자원- " + testPlayer.userComet[1].iceAmount);
+
+        cometGenerate.selectDeleteCometData(testPlayer, 1);
+
 
     }
 
