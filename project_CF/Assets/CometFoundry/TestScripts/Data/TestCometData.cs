@@ -23,9 +23,14 @@ public class TestCometData
     public int ironAmount;
     public int copperAmount;
     public int iceAmount;
+
+    // 혜성의 크기
+    public int cometWidth;
+    public int cometLength;
 }
 
 /*
+ * 2026-10-16
  * 혜성의 아이디, 코드, 등급
  * 
  * 혜성의 넘버링은 혜성이름이 중복되지 않게 하기위한 조치.

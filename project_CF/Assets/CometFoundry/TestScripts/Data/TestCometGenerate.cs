@@ -9,7 +9,20 @@ public class TestCometGenerate : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        TestPlayerData player = new TestPlayerData();
+
+        player.userName = "player01";
+        player.userMoeny = 10000;
+
+
+
+
+    }
+
+    void createCometData()
+    {
         List<TestCometData> comets = new List<TestCometData>();
+
 
         // 3개의 혜성 객체 생성
         for (int i = 0; i < 3; i++)
@@ -43,7 +56,7 @@ public class TestCometGenerate : MonoBehaviour
 
             // 혜성의 총 자원노드의 수를 가지고 배열로 자원을 정한다.
             // 이후 랜덤함수를 이용하여 객체의 각 자원매장량에 덧셈을 더한다.
-            for (int y = 0; y > comet.resourceNodeCount; y++)
+            for (int y = 0; y < comet.resourceNodeCount; y++)
             {
                 // 총 자원노드의 수에따른 자원노드 생성준비
                 int Nodetype = Random.Range(1, 4);
@@ -56,7 +69,7 @@ public class TestCometGenerate : MonoBehaviour
                     case 0:
                         break;
                     case 1:
-                        comet.ironAmount = comet.ironAmount+Random.Range(2500, 5000);
+                        comet.ironAmount = comet.ironAmount + Random.Range(2500, 5000);
                         break;
                     case 2:
                         comet.copperAmount = comet.copperAmount + Random.Range(2500, 5000);
@@ -64,25 +77,56 @@ public class TestCometGenerate : MonoBehaviour
                     case 3:
                         comet.iceAmount = comet.iceAmount + Random.Range(2500, 5000);
                         break;
-
                 }
-
             }
 
+            comet.cometWidth = Random.Range(10, 19);
+            comet.cometLength = Random.Range(10, 19);
+
             comets.Add(comet);
-
         }
-
 
         // 리스트의 카운트(생성된 혜성객체의 수)에 따른 매장량 출력
         for (int i = 0; i < comets.Count; i++)
         {
             Debug.Log(comets[i].cometName);
-            Debug.Log(comets[i].ironAmount);
-            Debug.Log(comets[i].copperAmount); 
-            Debug.Log(comets[i].iceAmount);
+            Debug.Log("iron " + comets[i].ironAmount);
+            Debug.Log("copper " + comets[i].copperAmount);
+            Debug.Log("ice " + comets[i].iceAmount);
         }
     }
 
+    // 혜성을 선택후 남은 혜성의 데이터를 정리하기 위한 함수.
+    void selectSaveCometData(List<TestCometData>comets)
+    {
+        //혜성의 임시 선택
+        int selectedIndex = 1;
+
+
+
+        // 차후 혜성의 선택의 밑준비
+       // while (true){}
+        
+    }
+
+
 
 }
+
+/*
+ * 2026-10-16
+ * 목표
+ * 혜성의 생성 및 혜성 데이터에 랜덤값을 입력하기위한 준비
+ * 
+ * 1차 테스트 혜성의 객체 단일생성 성공
+ * 2차 테스트 혜성의 객체 다중생성 실패 - 원인 : 반복문의 조건 값의 설정실패.
+ * 3차 테스트 혜성의 객체 다중생성 성공 - 개선후 정상적으로 출력이 되는 결과
+ * 
+ * 해당 코드를 createCometData 함수로 변경.
+ * 
+ * 2026-10-17
+ * 목표
+ * 혜성의 생성후 선택된 혜성이 플레이어 데이터로 이동되며 나머지 혜성의 데이터는 삭제한다.
+ * 
+ * 
+ */
