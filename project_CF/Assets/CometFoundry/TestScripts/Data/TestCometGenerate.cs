@@ -1,25 +1,12 @@
 using UnityEngine;
-
 using System.Collections.Generic;
 using UnityEditor;
 
 
 public class TestCometGenerate : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        TestPlayerData player = new TestPlayerData();
-
-        player.userName = "player01";
-        player.userMoeny = 10000;
-
-
-
-
-    }
-
-    void createCometData()
+    
+    public List<TestCometData> CreateCometData()
     {
         List<TestCometData> comets = new List<TestCometData>();
 
@@ -94,18 +81,31 @@ public class TestCometGenerate : MonoBehaviour
             Debug.Log("copper " + comets[i].copperAmount);
             Debug.Log("ice " + comets[i].iceAmount);
         }
+
+        return comets;
     }
 
     // 혜성을 선택후 남은 혜성의 데이터를 정리하기 위한 함수.
-    void selectSaveCometData(List<TestCometData>comets)
+    public void selectSaveCometData(TestPlayerData player, List<TestCometData>comets, int selectedIndex)
     {
-        //혜성의 임시 선택
-        int selectedIndex = 1;
+
+        // 차후 에러방지.
+        if (selectedIndex < 0 || selectedIndex >= comets.Count)
+        {
+            Debug.LogError("잘못된 혜성 선택");
+            return;
+        }
+
+        // 유저의 혜성리스트에 선택된 혜성 등록.
+        player.userComet.Add(comets[selectedIndex]);
+
+        // 선택하지 않은 혜성 후보 정리
+        comets.Clear();
 
 
 
-        // 차후 혜성의 선택의 밑준비
-       // while (true){}
+        // 차후 혜성의 영구 선택의 밑준비
+        // while (true){}
         
     }
 
