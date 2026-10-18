@@ -35,6 +35,12 @@ public class TestCometFoundryManager : MonoBehaviour
 
         startComet.resourceNodeCount = 5;
 
+        startComet.totalResourceAmount[0] = 1;
+        startComet.totalResourceAmount[1] = 1;
+        startComet.totalResourceAmount[2] = 2;
+        startComet.totalResourceAmount[3] = 2;
+        startComet.totalResourceAmount[4] = 3;
+
         startComet.ironAmount = 50000;
         startComet.copperAmount = 30000;
         startComet.iceAmount = 10000;
