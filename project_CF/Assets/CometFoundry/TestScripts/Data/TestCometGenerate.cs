@@ -82,9 +82,9 @@ public class TestCometGenerate : MonoBehaviour
         for (int i = 0; i < comets.Count; i++)
         {
             Debug.Log(comets[i].cometName);
-            Debug.Log("iron " + comets[i].ironAmount);
-            Debug.Log("copper " + comets[i].copperAmount);
-            Debug.Log("ice " + comets[i].iceAmount);
+            //Debug.Log("iron " + comets[i].ironAmount);
+            //Debug.Log("copper " + comets[i].copperAmount);
+            //Debug.Log("ice " + comets[i].iceAmount);
         }
 
         return comets;
@@ -104,14 +104,45 @@ public class TestCometGenerate : MonoBehaviour
         // 유저의 혜성리스트에 선택된 혜성 등록.
         player.userComet.Add(comets[selectedIndex]);
 
+
+        // 확인용 디버그
+        Debug.Log("플레이어 null 여부: " + (player == null));
+        Debug.Log("후보 리스트 null 여부: " + (comets == null));
+
+        if (player == null || comets == null)
+        {
+            Debug.LogError("플레이어 또는 후보 리스트가 없습니다.");
+            return;
+        }
+
+        Debug.Log("보유 혜성 리스트 null 여부: " +
+                  (player.userComet == null));
+
+        if (player.userComet == null)
+        {
+            Debug.LogError("보유 혜성 리스트가 초기화되지 않았습니다.");
+            return;
+        }
+
+        if (selectedIndex < 0 || selectedIndex >= comets.Count)
+        {
+            Debug.LogError("잘못된 혜성 선택");
+            return;
+        }
+
+        player.userComet.Add(comets[selectedIndex]);
+
+        Debug.Log("혜성 등록 성공: " +
+                  comets[selectedIndex].cometName);
+
         // 선택하지 않은 혜성 후보 정리
-        comets.Clear();
+        //comets.Clear();
 
 
 
         // 차후 혜성의 영구 선택의 밑준비
         // while (true){}
-        
+
     }
 
     public void selectDeleteCometData(TestPlayerData player, int selectedIndex)

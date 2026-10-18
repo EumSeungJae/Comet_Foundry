@@ -14,7 +14,7 @@ public class TestPlayerData
 
 
     // 유저의 보유혜성목록
-    public List<TestCometData> userComet;
+    public List<TestCometData> userComet = new List<TestCometData>();
 
 
 }

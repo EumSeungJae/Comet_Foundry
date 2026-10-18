@@ -11,10 +11,15 @@ public class TestCometFoundryManager : MonoBehaviour
     private TestCometGenerate cometGenerate;
 
 
+    // 탐사후보 리스트
+    private List<TestCometData> cometCandidates;
+
     void Start()
     {
         // 시작시 플레이어 데이터 생성 및 기본 혜성 부여.
-        TestPlayerData testPlayer = new TestPlayerData();
+        // TestPlayerData testPlayer = new TestPlayerData();
+
+        testPlayer = new TestPlayerData();
 
         testPlayer.userName = "잉어킹";
         testPlayer.userMoeny = 50000;
@@ -43,7 +48,7 @@ public class TestCometFoundryManager : MonoBehaviour
         cometGenerate = GetComponent<TestCometGenerate>();
 
         // 컴포넌트 연동확인
-        if(cometGenerate == null)
+        if (cometGenerate == null)
         {
             Debug.LogError("TestCometGenerate 컴포넌트가 없습니다.");
             return;
@@ -73,4 +78,49 @@ public class TestCometFoundryManager : MonoBehaviour
 
     }
 
+
+    public void OnGenerateButton()
+    {
+        // 혜성 생성버튼 함수
+        if (cometGenerate == null)
+        {
+            Debug.LogWarning("생성클래스 연결되지않음");
+        }
+
+        cometCandidates = cometGenerate.CreateCometData();
+
+        Debug.Log("혜성탐사 실행");
+
+        for (int i = 0; i < cometCandidates.Count; i++)
+        {
+            Debug.Log("발견 : " + cometCandidates[i].cometName);
+        }
+
+    }
+
+    public void OnSelectButton(int selectedButtonIndex)
+    {
+        // 혜성 지정저장 버튼
+        if (cometGenerate == null || cometCandidates == null)
+        {
+            Debug.LogWarning("저장대상의 누락");
+            return;
+        }
+
+        cometGenerate.selectSaveCometData(testPlayer, cometCandidates, selectedButtonIndex);
+
+    }
+
+    public void OnDeleteButton(int selectedDeleteIndex)
+    {
+        // 혜성 지정삭제 버튼
+        if (cometGenerate == null)
+        {
+            Debug.LogWarning("저장대상의 누락");
+            return;
+        }
+
+        cometGenerate.selectDeleteCometData(testPlayer, selectedDeleteIndex);
+
+    }
 }
