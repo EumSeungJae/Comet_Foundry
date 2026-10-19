@@ -35,8 +35,8 @@ Comet Foundry는 혜성을 탐사하고 자원을 채굴하여 공장을 운영�
 - 건설된 건물의 Type에 따른 건물기능 결정
 
 ## 구현 진행 상황
-- [x] [혜성 데이터 클래스 구현](https://github.com/EumSeungJae/Comet_Foundry/blob/main/project_CF/Assets/CometFoundry/TestScripts/Data/TestCometData.cs)
-- [x] [혜성 3개 무작위 생성 및 자원 노드, 매장량 생성](https://github.com/EumSeungJae/Comet_Foundry/blob/main/project_CF/Assets/CometFoundry/TestScripts/Data/TestCometGenerate.cs)
-- [x] [혜성 선택 및 소유 데이터 연결](https://github.com/EumSeungJae/Comet_Foundry/blob/main/project_CF/Assets/CometFoundry/TestScripts/Data/TestCometGenerate.cs)
+- [x] [혜성 데이터 클래스 구현](https://github.com/EumSeungJae/Comet_Foundry/blob/main/project_CF/Assets/CometFoundry/TestScripts/Data/Comet/TestCometData.cs)
+- [x] [혜성 3개 무작위 생성 및 자원 노드, 매장량 생성](https://github.com/EumSeungJae/Comet_Foundry/blob/main/project_CF/Assets/CometFoundry/TestScripts/Data/Comet/TestCometGenerate.cs)
+- [x] [혜성 선택 및 소유 데이터 연결](https://github.com/EumSeungJae/Comet_Foundry/blob/main/project_CF/Assets/CometFoundry/TestScripts/Manager/TestCometFoundryManager.cs)
 - [x] [혜성 탐사 UI 구현]
 - [ ] [자원 채굴 시스템 구현]
