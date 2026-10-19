@@ -28,6 +28,12 @@ Comet Foundry는 혜성을 탐사하고 자원을 채굴하여 공장을 운영�
 - 소유 혜성 목록 관리
 - 선택한 혜성을 플레이어 데이터에 등록
 
+### 3. 건물 건설 및 관리 시스템
+- 혜성에 건설될 객체 생성
+- 혜성에 건설 가능 / 불능 판정 생성
+- 소유한 혜성의 건물 데이터 등록후 출력
+- 건설된 건물의 Type에 따른 건물기능 결정
+
 ## 구현 진행 상황
 - [x] [혜성 데이터 클래스 구현](https://github.com/EumSeungJae/Comet_Foundry/blob/main/project_CF/Assets/CometFoundry/TestScripts/Data/TestCometData.cs)
 - [x] [혜성 3개 무작위 생성 및 자원 노드, 매장량 생성](https://github.com/EumSeungJae/Comet_Foundry/blob/main/project_CF/Assets/CometFoundry/TestScripts/Data/TestCometGenerate.cs)
