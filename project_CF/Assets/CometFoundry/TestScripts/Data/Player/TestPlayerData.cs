@@ -8,14 +8,33 @@ using System.Collections.Generic;
 
 public class TestPlayerData
 {
-    // 유저의 이름과 보유자금
-    public string userName;
-    public int userMoeny;
+    // 유저 데이터의 설정값 확인과 자금
+    public bool userSetting = false;
+    
+    private int userMoeny;
 
 
     // 유저의 보유혜성목록
     public List<TestCometData> userComet = new List<TestCometData>();
+    public int TestMaxCometCount = 10;
 
+
+
+    // ======= Money 자금의 관리 ====== //
+    public void TestAddMoney(int addMoney)
+    {
+        userMoeny = userMoeny + addMoney;
+    }
+
+    public void TestRemoveMoney(int removeMoney)
+    {
+        userMoeny = userMoeny - removeMoney;
+    }
+
+    public int TestGetMoney()
+    {
+        return userMoeny;
+    }
 
 }
 

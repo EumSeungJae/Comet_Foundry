@@ -5,12 +5,7 @@ using UnityEditor;
 
 public class TestCometGenerate : MonoBehaviour
 {
-    void Start()
-    {
-        TestPlayerData testPlayerData = new TestPlayerData();
-    }
-
-
+  
     public List<TestCometData> CreateCometData()
     {
         List<TestCometData> comets = new List<TestCometData>();
@@ -170,7 +165,23 @@ public class TestCometGenerate : MonoBehaviour
 
     }
 
+    // ====== Comet 혜성의 관리 ====== //
+    public int TestFindCometID(TestPlayerData user, int SearchID)
+    {
+        // 혜성의 ID 중복을 막기위한 서치기능
+        int findID = 21;
 
+        for (int checkID = 0; checkID < user.userComet.Count; checkID++)
+        {
+            if (user.userComet[checkID].cometID == SearchID)
+            {
+                findID = checkID;
+                break;
+            }
+        }
+
+        return findID;
+    }
 }
 
 /*
