@@ -27,7 +27,16 @@ public class TestCometData
     // Çý¼ºÀÇ Å©±â
     public int cometWidth;
     public int cometLength;
+
+    public TestBuildingData[,] buildingGrid;
+    public void CreateGrid(TestCometData comet)
+    {
+        comet.buildingGrid = 
+            new TestBuildingData[comet.cometWidth, comet.cometLength];
+    }
+
 }
+
 
 /*
  * 2026-10-16

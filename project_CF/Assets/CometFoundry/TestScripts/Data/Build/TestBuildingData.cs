@@ -13,13 +13,12 @@ public enum BuildType
 public class TestBuildingData
 {
     // 건물의 이름 과 타입
+    public int bildingID;
     public string buildingName;
     public BuildType buildingType;
     
     public int buildingCost;
 
-    public int buildingWidth;
-    public int buildingLength;
 
     // public int buildingLevel; 차후개발
 

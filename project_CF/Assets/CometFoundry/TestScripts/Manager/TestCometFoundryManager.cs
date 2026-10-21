@@ -51,7 +51,7 @@ public class TestCometFoundryManager : MonoBehaviour
         // GetComponent 로 가져오는 방법을 학습
 
         // 같은 GameObject의 생성기 가져오기
-        cometGenerate = GetComponent<TestCometGenerate>();
+        cometGenerate = GetComponentInChildren<TestCometGenerate>();
 
         // 컴포넌트 연동확인
         if (cometGenerate == null)
@@ -61,25 +61,25 @@ public class TestCometFoundryManager : MonoBehaviour
         }
 
         // 혜성 다중생성
-        List<TestCometData> cometIndex = cometGenerate.CreateCometData();
+        //List<TestCometData> cometIndex = cometGenerate.CreateCometData();
 
         // 테스트 혜성 중 두번째 혜성 선택
-        cometGenerate.selectSaveCometData(testPlayer, cometIndex, 1);
+        //cometGenerate.selectSaveCometData(testPlayer, cometIndex, 1);
 
 
         // 시작시 저장된 혜성을 보유 혜성 목록에서 데이터를 출력하는 실험.
-        Debug.Log("이름 - " + testPlayer.userName);
-        Debug.Log("혜성 이름 - " + testPlayer.userComet[0].cometName);
-        Debug.Log("철 자원- " + testPlayer.userComet[0].ironAmount);
-        Debug.Log("구리 자원- " + testPlayer.userComet[0].copperAmount);
-        Debug.Log("얼음 자원- " + testPlayer.userComet[0].iceAmount);
+        // Debug.Log("이름 - " + testPlayer.userName);
+        // Debug.Log("혜성 이름 - " + testPlayer.userComet[0].cometName);
+        // Debug.Log("철 자원- " + testPlayer.userComet[0].ironAmount);
+        // Debug.Log("구리 자원- " + testPlayer.userComet[0].copperAmount);
+        // Debug.Log("얼음 자원- " + testPlayer.userComet[0].iceAmount);
+        // 
+        // Debug.Log("혜성 이름 - " + testPlayer.userComet[1].cometName);
+        // Debug.Log("철 자원- " + testPlayer.userComet[1].ironAmount);
+        // Debug.Log("구리 자원- " + testPlayer.userComet[1].copperAmount);
+        // Debug.Log("얼음 자원- " + testPlayer.userComet[1].iceAmount);
 
-        Debug.Log("혜성 이름 - " + testPlayer.userComet[1].cometName);
-        Debug.Log("철 자원- " + testPlayer.userComet[1].ironAmount);
-        Debug.Log("구리 자원- " + testPlayer.userComet[1].copperAmount);
-        Debug.Log("얼음 자원- " + testPlayer.userComet[1].iceAmount);
-
-        cometGenerate.selectDeleteCometData(testPlayer, 1);
+        // cometGenerate.selectDeleteCometData(testPlayer, 1);
 
 
     }

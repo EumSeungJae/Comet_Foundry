@@ -1,45 +1,22 @@
+using CometFoundry.Simulation;
 using UnityEditor.Animations;
 using UnityEngine;
 
-public class TestBuilding : MonoBehaviour
+public class TestBuilding
 {
-    private bool[,] buildingGrid;
+    // 그리드의 건설 데이터를 확인하고 건설이 값을 반환한다.
+    // 조건 1. 그리드외가 아닐것.
+    // 조건 2. 그리드의 건설값이 없을것.
+    // 조건 3. 그리드 위일것.
 
-    // 함수의 목적
-    // 생성된 혜성의 크기값을 가져와서 반영한다.
-    // 2차원 배열을 만들어 반복문을 사용하여 Prefab을 출력한다.
-    public void LoadBuildingGrid(int width, int length)
+    public bool CanBuild(TestCometData comet, int x ,int y)
     {
-        buildingGrid = new bool[width, length];
+        if (x<0||x>=comet.cometWidth) return false;
+        if (x<0||x>=comet.cometLength) return false;
 
-        for (int y = 0; y < length; y++)
-        {
+        if (comet.buildingGrid[x, y] != null) return false;
 
-
-            for (int x = 0; x < width; x++)
-            {
-                buildingGrid[x, y] = false;
-            }
-        }
-
-        Debug.Log("건설 그리드 생성");
-    }
-
-    public void LoadBilding()
-    {
-
-    }
-
-    public bool CanBuild(int x, int y)
-    {
-        if (buildingGrid == null) return false;
-
-        if (x < 0 || y < 0 || 
-            x >= buildingGrid.GetLongLength(0) || 
-            y >= buildingGrid.GetLongLength(1))
-        return false;
-
-        return !buildingGrid[x, y];
+        return true;
     }
 
 
